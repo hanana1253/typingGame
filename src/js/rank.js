@@ -20,8 +20,8 @@ const render = () => {
   // const fetchedData = window.localStorage('rankingList');
 
   // myName, myRank, myRecord는 전역변수 상태를 가져올 예정이라 임시로 선언해둠
-  const myName = 'Chaeyoung';
-  const myRank = 2;
+  const myName = 'Hangyul';
+  const myRank = 11;
   const myRecord = { mm: 1, ss: 30, ms: 0 };
 
   document.querySelector('.ranking-list').innerHTML =
@@ -44,6 +44,7 @@ const render = () => {
 
   document.querySelector('.total-players').textContent = fetchedData.length;
 
+  // 5위권 밖인 경우 li 요소 추가 및 result 요소 높이변경(class추가하여)
   if (myRank < 5) return;
   const newListItem = document.createElement('li');
   newListItem.classList.add('added');
@@ -52,7 +53,6 @@ const render = () => {
       <span>${formatRecord(myRecord)}</span>`;
   document.querySelector('.ranking-list').appendChild(newListItem);
   document.querySelector('.result').classList.add('added');
-  
 };
 
 // utils로 빼둘 함수
