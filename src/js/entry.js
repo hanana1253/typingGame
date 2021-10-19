@@ -7,7 +7,7 @@ let rankingList = [
 ];
 
 /*
-ranks 유무확인 (혹은 길이 반환 getRanksLength)
+
 ranks 스토리지에 생성 (setRanks)
 ranks 의 name 중복확인 (isNameExist)
 ranks 에 새로운 기록 추가 (name 값 입력, record 초기값) (setRank)
@@ -21,7 +21,18 @@ const setRankingList = ({ username, record = { mm: 0, ss: 0, ms: 0 } }) => {
   rankingList = [...rankingList, { username, record }];
 };
 
+const isExistName = inputUserName =>
+  rankingList.some(ranking => ranking.username === inputUserName);
+
 window.addEventListener('DOMContentLoaded', () => {
   if (!localStorage.getItem('rankingList'))
     localStorage.setItem('rankingList', []);
 });
+
+document.getElementById('userName').oninput = e => {
+  const error = document.querySelector('.error');
+  // console.log(e);
+  error.textContent = isExistName(e.target.value)
+    ? '이미 사용중인 이름입니다.'
+    : '';
+};
