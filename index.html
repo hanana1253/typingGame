@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Typing game</title>
+    <link rel="stylesheet" href="./src/css/entry.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">Typing game</h1>
+      <main>
+        <h2 class="a11y-hidden">타이핑 게임 입장</h2>
+        <form class="entry-form">
+          <fieldset>
+            <legend class="a11y-hidden">타이핑 게임 폼</legend>
+            <div class="input-container user-name">
+              <label for="userName" class="a11y-hidden">유저 이름</label>
+              <input
+                type="text"
+                id="userName"
+                class="entry-form-input"
+                placeholder="닉네임을 입력해주세요"
+              />
+              <div class="error"></div>
+            </div>
+            <button class="button start">시작하기</button>
+            <a href="#" class="button rank">랭킹보기</a>
+          </fieldset>
+        </form>
+      </main>
+    </div>
+  </body>
+</html>
