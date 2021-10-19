@@ -7,5 +7,21 @@
     <title>Typing game</title>
     <link rel="stylesheet" href="./src/css/entry.css" />
   </head>
-  <body></body>
+  <body>
+    <h1 class="a11y-hidden">Typing game</h1>
+    <main>
+      <h2 class="a11y-hidden">타이핑 게임 입장</h2>
+      <form class="entry-form">
+        <fieldset>
+          <legend class="a11y-hidden">타이핑 게임 폼</legend>
+          <div class="user-name">
+            <label for="userName" class="a11y-hidden">유저 이름</label>
+            <input type="text" id="userName" />
+          </div>
+          <button class="button">START</button>
+          <a href="#" class="button">RANKING</a>
+        </fieldset>
+      </form>
+    </main>
+  </body>
 </html>
