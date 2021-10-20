@@ -14,9 +14,13 @@ let state = {
 
 const $word = document.querySelector('.word');
 const $time = document.querySelector('.time');
-const $input = document.querySelector('.container > input');
+const $input = document.querySelector('.game > input');
 const $error = document.querySelector('.error');
 const $left = document.querySelector('.left');
+
+const $popupWrap = document.querySelector('.popup-wrap');
+const $popupTitle = document.querySelector('.popup-title');
+const $popupRecord = document.querySelector('.popup-record');
 
 const render = () => {
   $word.textContent = WORDS[state.wordIndex];
@@ -24,6 +28,15 @@ const render = () => {
   $input.classList.toggle('error', state.isFail);
   $input.value = '';
   $error.style.display = state.isFail ? 'block' : 'none';
+
+  if (state.isFinished) {
+    $popupWrap.style.display = 'block';
+    $popupWrap.classList.toggle('best-record', state.isBest);
+    $popupTitle.textContent = state.isBest ? 'Congraturations!!' : 'Good Job!!';
+    $popupRecord.textContent =
+      (state.isBest ? 'The highest record : ' : 'record : ') +
+      formatElapsedTime(elapsedTime);
+  }
 };
 
 const setState = newState => {

@@ -1,6 +1,7 @@
 @use '../base/' as *;
 
 .popup-wrap {
+  display: none;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -8,7 +9,7 @@
   right: 0;
   width: 100%;
   height: 100vh;
-  background: rgba($darkblue2, 0.7);
+  background: rgba(0, 0, 0, 0.7);
 
   &.best-record {
     background-image: url(../images/firecracker.gif);
