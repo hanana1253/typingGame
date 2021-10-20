@@ -14,24 +14,26 @@
     <title>Typing Game</title>
   </head>
   <body>
-    <div class="container">
-      <h1 class="title">Typing Game</h1>
-      <small>Type the following:</small>
+    <div class="game-container">
+      <div class="game">
+        <h1 class="title">Typing Game</h1>
+        <small>Type the following:</small>
 
-      <h2 class="word"></h2>
+        <h2 class="word"></h2>
 
-      <input
-        type="text"
-        id="text"
-        autocomplete="off"
-        placeholder="Type the word here..."
-        autofocus
-      />
-      <div class="error">틀렸습니다 다시 입력하세요</div>
+        <input
+          type="text"
+          id="text"
+          autocomplete="off"
+          placeholder="Type the word here..."
+          autofocus
+        />
+        <div class="error">틀렸습니다 다시 입력하세요</div>
 
-      <p class="time-container">Time: <span class="time">00:00:00</span></p>
+        <p class="time-container">Time: <span class="time">00:00:00</span></p>
 
-      <p class="left-container">Left words: <span class="left">0</span></p>
+        <p class="left-container">Left words: <span class="left">0</span></p>
+      </div>
     </div>
 
     <script src="./js/game.js"></script>
