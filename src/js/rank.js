@@ -1,4 +1,4 @@
-import { getFromLocalStorage } from './utils.js';
+import { getFromLocalStorage, formatRecordFromMs } from './utils.js';
 
 // localStorage에서 가져온 데이터
 // const fetchedData = [
@@ -73,16 +73,6 @@ const renderRanks = () => {
       <span>${formatRecordFromMs(currentUser.record)}</span>`;
   document.querySelector('.ranks-ol').appendChild(newListItem);
   document.querySelector('.result').classList.add('added');
-};
-
-// utils로 빼둘 함수
-const formatRecordFromMs = miliseconds => {
-  const mm = parseInt(miliseconds / 6000) % 60;
-  const ss = parseInt(miliseconds / 100) % 60;
-  const ms = miliseconds % 100;
-  // 1 => '01', 10 => '10'
-  const format = n => (n < 10 ? '0' + n : n + '');
-  return `${format(mm)}:${format(ss)}:${format(ms)}`;
 };
 
 document.addEventListener('DOMContentLoaded', renderRanks);
