@@ -15,7 +15,7 @@ const fetchedData = [
   { username: 'Fastcampus9', record: { mm: 3, ss: 40, ms: 0 } }
 ];
 
-const render = () => {
+const renderRanks = () => {
   // 아직 로컬스토리지에 저장하지 않아서 가져올 수가 없으므로 아래 주석처리
   // const fetchedData = window.localStorage('ranksList');
 
@@ -24,6 +24,12 @@ const render = () => {
   const myRank = 2;
   const myRecord = { mm: 1, ss: 30, ms: 0 };
 
+<<<<<<< HEAD
+=======
+  // 전역상태변수에서 가져오는 함수
+
+
+>>>>>>> 030a271b47ead1b1cd87b298cb1c5e16ff4a6a95
   document.querySelector('.ranks-ol').innerHTML = fetchedData
       .slice(0, 5)
       .map(
@@ -60,4 +66,4 @@ const formatRecord = (() => {
   return ({ mm, ss, ms }) => `${format(mm)}:${format(ss)}:${format(ms)}`;
 })();
 
-document.addEventListener('DOMContentLoaded', render);
+document.addEventListener('DOMContentLoaded', renderRanks);

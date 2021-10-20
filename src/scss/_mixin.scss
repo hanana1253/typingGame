@@ -33,6 +33,10 @@ $rootUnit: 16px !default;
     @return (removeUnit(math.div($value, $base))) * 1em;
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 030a271b47ead1b1cd87b298cb1c5e16ff4a6a95
 // ranking 반짝거리는 효과
 @mixin slidingEffect {
     position: relative;
