@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Typing Game</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <h1 class="a11y-hidden">Typing Game</h1>
+    <section class="entry-container">
+      <p class="title">Typing game</p>
+      <main>
+        <h2 class="a11y-hidden">타이핑 게임 입장</h2>
+        <form class="entry-form">
+          <fieldset>
+            <legend class="a11y-hidden">타이핑 게임 폼</legend>
+            <div class="input-container user-name">
+              <label for="userName" class="a11y-hidden">유저 이름</label>
+              <input
+                type="text"
+                id="userName"
+                class="entry-form-input"
+                name="username"
+                placeholder="닉네임을 입력해주세요"
+              />
+              <div class="error"></div>
+            </div>
+            <button class="button start" disabled>시작하기</button>
+            <a href="#" class="button rank">랭킹보기</a>
+          </fieldset>
+        </form>
+      </main>
+    </section>
+
+    <section class="game-container">
+      <div class="game">
+        <h2 class="title">Typing Game</h2>
+        <small>Type the following:</small>
+
+        <h3 class="word"></h3>
+
+        <input
+          type="text"
+          id="text"
+          autocomplete="off"
+          placeholder="Type the word here..."
+          autofocus
+        />
+        <div class="error">틀렸습니다 다시 입력하세요</div>
+
+        <p class="time-container">Time: <span class="time">00:00:00</span></p>
+
+        <p class="left-container">Left words: <span class="left">0</span></p>
+      </div>
+      <!-- <div class="popup-wrap best-record">
+      <div class="popup">
+        <h2 class="popup-title">Good Job!!</h2>
+        <p class="popup-record">record : 00:12:11</p>
+        <div class="button-group">
+          <a href="./ranking.html" class="button">랭킹 보기</a>
+          <a href="./index.html" class="button">메인 페이지로</a>
+        </div>
+      </div>
+    </div> -->
+    </section>
+
+    <section class="ranks-container">
+      <h2 class="ranks-heading">Top Ranks</h2>
+      <ul class="ranks-ul">
+        <li class="header-row">
+          <span>Rank</span>
+          <span>Username</span>
+          <span>Record</span>
+        </li>
+        <li>
+          <ol class="ranks-ol"></ol>
+        </li>
+        <!-- <li>
+            <span>1</span>
+            <span>Bareum</span>
+            <span>00:01:00</span>
+          </li>
+          <li>
+            <span>2</span>
+            <span>Chaeyoung</span>
+            <span>00:11:00</span>
+          </li>
+          <li class="my-record">
+            <span>3</span>
+            <span>Sohyeong</span>
+            <span>00:12:00</span>
+          </li>
+          <li>
+            <span>4</span>
+            <span>Hangyul</span>
+            <span>00:41:00</span>
+          </li>
+          <li>
+            <span>5</span>
+            <span>Hanana</span>
+            <span>01:11:00</span>
+          </li> -->
+      </ul>
+      <article class="result">
+        <h3>
+          You ranked <span class="my-rank">3</span> out of
+          <span class="total-players">5</span> players!
+        </h3>
+        <p>Your record is <span class="my-result">00:46:59</span>.</p>
+      </article>
+      <button class="return">Back To Main Page</button>
+    </section>
+  </body>
+</html>
