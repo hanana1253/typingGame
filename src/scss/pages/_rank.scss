@@ -9,6 +9,10 @@
   }
 }
 
+.ranks-container {
+  min-width: 768px;
+}
+
 .ranks-heading {
   margin: 0 10vw;
   height: 20vh;
@@ -71,25 +75,26 @@
 }
 
 .result {
-  background-color: $gray4;
   margin: 0 10vw;
+  height: 18vh;
+  line-height: 7vh;
   text-align: center;
   vertical-align: bottom;
-  height: 18vh;
+  background-color: $gray4;
   padding: 2vh;
-  line-height: 7vh;
   &.added {
-    padding: 0;
     height: 10vh;
     line-height: 5vh;
+    padding: 0;
   }
 }
 
 .return {
+  display: block;
+  width: 40vw;
   background-color: $lightblue;
   border-radius: 15px;
-  width: 40vw;
-  display: block;
+  border: 2px solid $darkblue2;
   text-align: center;
   padding: 1.5vh 3vw;
   font-size: 1.5rem;
