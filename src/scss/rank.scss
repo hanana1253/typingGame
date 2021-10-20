@@ -9,7 +9,7 @@
   }
 }
 
-.rankpage-heading {
+.ranks-heading {
   margin: 0 10vw;
   height: 20vh;
   line-height: 15vh;
@@ -19,7 +19,7 @@
   font-size: 5rem;
 }
 
-.ranking-list {
+.ranks-list {
   margin: 1vh auto;
   width: 80vw;
   padding: 2vh 3vw;
@@ -46,46 +46,12 @@
     &.my-record {
       background-color: gold;
       color: $red;
-      position: relative;
-      &::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 6vh;
-        transform: translateX(100%);
-        z-index: 1;
-        animation: slide 1.5s infinite 1s;
-        background: linear-gradient(
-          to right,
-          rgba(255, 255, 255, 0) 0%,
-          rgba(255, 255, 255, 0.8) 50%,
-          rgba(128, 186, 232, 0) 99%,
-          rgba(125, 185, 232, 0) 100%
-        );
-      }
+      @include slidingEffect();
     }
     &.added {
       margin-top: 3vh;
       background-color: $lightblue;
-      position: relative;
-      &::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 6vh;
-        transform: translateX(100%);
-        z-index: 1;
-        animation: slide 1.5s infinite 1s;
-        background: linear-gradient(
-          to right,
-          rgba(255, 255, 255, 0) 0%,
-          rgba(255, 255, 255, 0.8) 50%,
-          rgba(128, 186, 232, 0) 99%,
-          rgba(125, 185, 232, 0) 100%
-        );
-      }
+      @include slidingEffect();
     }
   }
 }
