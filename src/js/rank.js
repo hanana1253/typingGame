@@ -17,28 +17,21 @@ import { getFromLocalStorage } from './utils.js';
 //   { username: 'Fastcampus9', record: 12930 }
 // ];
 
-// 실험용 localStorage 넣는 코드
+// // 실험용 localStorage 넣는 코드
 // window.localStorage.setItem('records', JSON.stringify(fetchedData));
 // window.localStorage.setItem('currentUser', JSON.stringify({ username: 'Hangyul', record: 6000}))
 
 const renderRanks = () => {
-  // 아직 로컬스토리지에 저장하지 않아서 가져올 수가 없으므로 아래 주석처리
   const fetchedData = getFromLocalStorage('records');
 
+  // 데이터가 없는 경우, No records yet 메시지 노출 후 return
   if (!fetchedData) {
-    document.querySelector('.header-row').textContent = 'NO RECORDS YET';
+    document.querySelector('.header-row').innerHTML = '<p>NO RECORDS YET</p>';
     document.querySelector('.result').style.display = 'none';
+    return;
   }
-  // myName, myRank, myRecord는 전역변수 상태를 가져올 예정이라 임시로 선언해둠
+
   const currentUser = getFromLocalStorage('currentUser');
-  // const currentUser = { username: 'Chaeyoung', record: 110 }
-
-  if (!currentUser) return;
-
-  const currentUserRank =
-    fetchedData.findIndex(
-      userData => userData.username === currentUser.username
-    ) + 1;
 
   // 전역상태변수에서 가져오는 함수
 
@@ -47,22 +40,31 @@ const renderRanks = () => {
     .map(
       (userData, index) =>
         `<li ${
-          userData.username === currentUser.username ? 'class="my-record"' : ''
+          userData.username === currentUser?.username ? 'class="my-record"' : ''
         }>
-            <span>${index + 1}</span>
-            <span>${userData.username}</span>
-            <span>${formatRecordFromMs(userData.record)}</span>
-          </li>`
+      <span>${index + 1}</span>
+      <span>${userData.username}</span>
+      <span>${formatRecordFromMs(userData.record)}</span>
+      </li>`
     )
     .join('');
+
+  if (!currentUser) {
+    document.querySelector('.result').style.display = 'none';
+    return;
+  }
+
+  const currentUserRank =
+    fetchedData.findIndex(
+      userData => userData.username === currentUser.username
+    ) + 1;
 
   document.querySelector('.my-rank').textContent = currentUserRank;
   document.querySelector('.my-result').textContent = formatRecordFromMs(
     currentUser.record
   );
-
   document.querySelector('.total-players').textContent = fetchedData.length;
-
+  document.querySelector('.return').textContent = 'Try Again';
   if (currentUserRank < 5) return;
   const newListItem = document.createElement('li');
   newListItem.classList.add('added');
