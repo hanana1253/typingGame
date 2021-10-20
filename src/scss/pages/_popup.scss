@@ -1,4 +1,4 @@
-@import './reset', './default', './color', './mixin';
+@use '../base/' as *;
 
 .popup-wrap {
   position: fixed;

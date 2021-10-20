@@ -1,0 +1,102 @@
+@use '../base/' as *;
+
+@keyframes slide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.ranks-heading {
+  margin: 0 10vw;
+  height: 20vh;
+  line-height: 15vh;
+  background-color: $lightblue;
+  text-align: center;
+  color: $darkblue2;
+  font-size: 5rem;
+}
+
+.ranks-ul {
+  margin: 1vh auto;
+  width: 80vw;
+  padding: 2vh 3vw;
+  background-color: $gray6;
+  border-radius: 5px;
+
+  & > li {
+    margin: 1vh;
+    display: flex;
+    justify-content: space-between;
+
+    &.header-row {
+      height: 6vh;
+      line-height: 6vh;
+      font-size: 1.5rem;
+      background-color: $gray4;
+    }
+
+    span {
+      min-width: 20vw;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    & .ranks-ol {
+      width: 100%;
+
+      & > li {
+        margin: 1vh;
+        display: flex;
+        justify-content: space-between;
+        height: 6vh;
+        line-height: 6vh;
+
+        &.my-record {
+          background-color: gold;
+          color: $red;
+          @include slidingEffect();
+        }
+
+        &.added {
+          margin-top: 3vh;
+          background-color: $lightblue;
+          @include slidingEffect();
+        }
+      }
+    }
+  }
+}
+
+.result {
+  background-color: $gray4;
+  margin: 0 10vw;
+  text-align: center;
+  vertical-align: bottom;
+  height: 18vh;
+  padding: 2vh;
+  line-height: 7vh;
+  &.added {
+    padding: 0;
+    height: 10vh;
+    line-height: 5vh;
+  }
+}
+
+.return {
+  background-color: $lightblue;
+  border-radius: 15px;
+  width: 40vw;
+  display: block;
+  text-align: center;
+  padding: 1.5vh 3vw;
+  font-size: 1.5rem;
+  margin: 1vh auto;
+
+  &:hover {
+    background-color: $darkblue1;
+    color: $white;
+  }
+}

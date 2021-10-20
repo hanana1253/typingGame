@@ -1,3 +1,5 @@
+import { getFromLocalStorage, setLocalStorage } from './utils.js';
+
 const WORDS = ['sigh', 'tense', 'airplane'];
 
 let elapsedTime = { mm: 0, ss: 0, ms: 0 };
@@ -5,7 +7,9 @@ let timerId = null;
 
 let state = {
   wordIndex: 0,
-  isFail: false
+  isFail: false,
+  isFinished: false,
+  isBest: false
 };
 
 const $word = document.querySelector('.word');
@@ -52,6 +56,23 @@ const timeHandler = () => {
 
 const finish = () => {
   clearInterval(timerId);
+  // 1. currentUser :{ username: -> getLocal , userRecord = elapsedTime }
+  // 2. get record list
+  // 3. list add userRecord
+  // 4. sort
+  // 5.  0번 인덱스가 === username ? isBest: true, false
+  // 6 새로 정렬된 리스트를 storage set
+  // 7. setState({...state, isBest, isFinish: true})
+  const userRecord = {
+    username: getFromLocalStorage('currentUser').username,
+    record: elapsedTime
+  };
+  const localRecords = getFromLocalStorage('records') || [];
+  // localStorage 객체에 밀리세컨드 기록 넣어두기. 그 기록 빼와서 소팅하기
+  const records = [userRecord, ...localRecords];
+  const isBest = records[0].username === userRecord.username;
+  setState({ ...state, isBest, isFinished: true });
+  setLocalStorage('records', records);
   console.log('끝');
 
   // 팝업 등장
