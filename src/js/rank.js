@@ -1,65 +1,92 @@
+import { getFromLocalStorage, formatRecordFromMs } from './utils.js';
+
 // localStorage에서 가져온 데이터
-const fetchedData = [
-  { username: 'Bareum', record: { mm: 0, ss: 0, ms: 10 } },
-  { username: 'Chaeyoung', record: { mm: 0, ss: 10, ms: 0 } },
-  { username: 'Sohyeong', record: { mm: 0, ss: 20, ms: 0 } },
-  { username: 'Fastcampus', record: { mm: 0, ss: 40, ms: 0 } },
-  { username: 'Fastcampus2', record: { mm: 0, ss: 50, ms: 0 } },
-  { username: 'Fastcampus3', record: { mm: 0, ss: 60, ms: 0 } },
-  { username: 'Fastcampus4', record: { mm: 0, ss: 70, ms: 0 } },
-  { username: 'Fastcampus5', record: { mm: 0, ss: 80, ms: 0 } },
-  { username: 'Fastcampus6', record: { mm: 0, ss: 90, ms: 0 } },
-  { username: 'Fastcampus7', record: { mm: 1, ss: 0, ms: 0 } },
-  { username: 'Hangyul', record: { mm: 1, ss: 30, ms: 0 } },
-  { username: 'Fastcampus8', record: { mm: 2, ss: 40, ms: 0 } },
-  { username: 'Fastcampus9', record: { mm: 3, ss: 40, ms: 0 } }
-];
+// const fetchedData = [
+//   { username: 'Bareum', record: 10 },
+//   { username: 'Chaeyoung', record: 110 },
+//   { username: 'Sohyeong', record: 1249 },
+//   { username: 'Fastcampus', record: 1500 },
+//   { username: 'Fastcampus2', record: 6000 },
+//   { username: 'Fastcampus3', record: 1800 },
+//   { username: 'Fastcampus4', record: 2000 },
+//   { username: 'Fastcampus5', record: 2100 },
+//   { username: 'Fastcampus6', record: 2300 },
+//   { username: 'Fastcampus7', record: 2500 },
+//   { username: 'Hangyul', record: 2930 },
+//   { username: 'Fastcampus8', record: 6000 },
+//   { username: 'Fastcampus9', record: 12930 }
+// ];
+
+// // 실험용 localStorage 넣는 코드
+// window.localStorage.setItem('records', JSON.stringify(fetchedData));
+// window.localStorage.setItem(
+//   'currentUser',
+//   JSON.stringify({ username: 'Chaeyoung', record: 6000 })
+// );
 
 const renderRanks = () => {
-  // 아직 로컬스토리지에 저장하지 않아서 가져올 수가 없으므로 아래 주석처리
-  // const fetchedData = window.localStorage('ranksList');
+  const fetchedData = getFromLocalStorage('records');
 
-  // myName, myRank, myRecord는 전역변수 상태를 가져올 예정이라 임시로 선언해둠
-  const myName = 'Chaeyoung';
-  const myRank = 2;
-  const myRecord = { mm: 1, ss: 30, ms: 0 };
+  // 데이터가 없는 경우, No records yet 메시지 노출 및 result 가린 후 return
+  if (!fetchedData) {
+    document.querySelector('.header-row').innerHTML = '<p>NO RECORDS YET</p>';
+    document.querySelector('.result').style.display = 'none';
+    return;
+  }
 
-  // 전역상태변수에서 가져오는 함수
-
+  // 5위까지 잘라서 보여주기.
   document.querySelector('.ranks-ol').innerHTML = fetchedData
-      .slice(0, 5)
-      .map(
-        (userData, index) =>
-          `<li ${userData.username === myName ? 'class="my-record"' : ''}>
-            <span>${index+1}</span>
-            <span>${userData.username}</span>
-            <span>${formatRecord(userData.record)}</span>
-          </li>`
-      )
-      .join('');
+    .slice(0, 5)
+    .map(
+      (userData, index) =>
+        `<li>
+      <span>${index + 1}</span>
+      <span class="username">${userData.username}</span>
+      <span>${formatRecordFromMs(userData.record)}</span>
+      </li>`
+    )
+    .join('');
 
-  // my-rank와 my-result는 전역변수 상태를 가져와 넣을 예정
-  document.querySelector('.my-rank').textContent = myRank;
-  document.querySelector('.my-result').textContent = formatRecord(myRecord);
+  const currentUser = getFromLocalStorage('currentUser');
+
+  // currentUser가 없으면 my-result 안보이게 처리
+  if (!currentUser) {
+    document.querySelector('.result').style.display = 'none';
+    return;
+  }
+
+  const currentUserRank =
+    fetchedData.findIndex(
+      userData => userData.username === currentUser.username
+    ) + 1;
+
+  document.querySelector('.my-rank').textContent = currentUserRank;
+  document.querySelector('.my-result').textContent = formatRecordFromMs(
+    currentUser.record
+  );
 
   document.querySelector('.total-players').textContent = fetchedData.length;
+  document.querySelector('.return').textContent = 'Try Again';
 
-  // 5위권 밖인 경우 li 요소 추가 및 result 요소 높이변경(class추가하여)
-  if (myRank < 5) return;
+  // currentUser가 5위 안에 드는 경우 my-record 클래스 이름 붙여주기
+  if (currentUserRank < 5) {
+    [...document.querySelector('.ranks-ol').children].forEach($li => {
+      $li.classList.toggle(
+        'my-record',
+        currentUser.username === $li.querySelector('.username').textContent
+      );
+    });
+    return;
+  }
+  
+  // 5위 안에 안 드는 경우에는 내 기록을 순위판 최하단에 붙여주기
   const newListItem = document.createElement('li');
   newListItem.classList.add('added');
-  newListItem.innerHTML = `<span>${myRank}</span>
-      <span>${myName}</span>
-      <span>${formatRecord(myRecord)}</span>`;
+  newListItem.innerHTML = `<span>${currentUserRank}</span>
+      <span>${currentUser.username}</span>
+      <span>${formatRecordFromMs(currentUser.record)}</span>`;
   document.querySelector('.ranks-ol').appendChild(newListItem);
   document.querySelector('.result').classList.add('added');
 };
-
-// utils로 빼둘 함수
-const formatRecord = (() => {
-  // 1 => '01', 10 => '10'
-  const format = n => (n < 10 ? '0' + n : n + '');
-  return ({ mm, ss, ms }) => `${format(mm)}:${format(ss)}:${format(ms)}`;
-})();
 
 document.addEventListener('DOMContentLoaded', renderRanks);

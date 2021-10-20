@@ -19,6 +19,10 @@ const $input = document.querySelector('.game > input');
 const $error = document.querySelector('.error');
 const $left = document.querySelector('.left');
 
+const $popupWrap = document.querySelector('.popup-wrap');
+const $popupTitle = document.querySelector('.popup-title');
+const $popupRecord = document.querySelector('.popup-record');
+
 const formatElapsedTime = (() => {
   const format = n => (n < 10 ? '0' + n : n + '');
 
@@ -38,6 +42,15 @@ const render = () => {
   $input.classList.toggle('error', state.isWrong);
   $error.style.display = state.isWrong ? 'block' : 'none';
   $time.textContent = formatElapsedTime(state.elapsedTime);
+
+  if (state.isFinished) {
+    $popupWrap.style.display = 'block';
+    $popupWrap.classList.toggle('best-record', state.isBest);
+    $popupTitle.textContent = state.isBest ? 'Congraturations!!' : 'Good Job!!';
+    $popupRecord.textContent =
+      (state.isBest ? 'The highest record : ' : 'record : ') +
+      formatElapsedTime(elapsedTime);
+  }
 };
 
 const setState = newState => {
