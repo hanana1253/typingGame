@@ -1,6 +1,6 @@
-const getRankingListFromLocalStorage = () => {
-  return JSON.parse(window.localStorage.getItem('rankingList'));
-}
+const getFromLocalStorage = key => JSON.parse(window.localStorage.getItem(key));
 
+const setLocalStorage = (key, value) =>
+  window.localStorage.setItem(key, JSON.stringify(value));
 
-export { getRankingListFromLocalStorage };
+export { getFromLocalStorage, setLocalStorage };
