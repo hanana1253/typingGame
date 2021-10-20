@@ -19,36 +19,37 @@ import { getFromLocalStorage, formatRecordFromMs } from './utils.js';
 
 // // 실험용 localStorage 넣는 코드
 // window.localStorage.setItem('records', JSON.stringify(fetchedData));
-// window.localStorage.setItem('currentUser', JSON.stringify({ username: 'Hangyul', record: 6000}))
+// window.localStorage.setItem(
+//   'currentUser',
+//   JSON.stringify({ username: 'Chaeyoung', record: 6000 })
+// );
 
 const renderRanks = () => {
   const fetchedData = getFromLocalStorage('records');
 
-  // 데이터가 없는 경우, No records yet 메시지 노출 후 return
+  // 데이터가 없는 경우, No records yet 메시지 노출 및 result 가린 후 return
   if (!fetchedData) {
     document.querySelector('.header-row').innerHTML = '<p>NO RECORDS YET</p>';
     document.querySelector('.result').style.display = 'none';
     return;
   }
 
-  const currentUser = getFromLocalStorage('currentUser');
-
-  // 전역상태변수에서 가져오는 함수
-
+  // 5위까지 잘라서 보여주기.
   document.querySelector('.ranks-ol').innerHTML = fetchedData
     .slice(0, 5)
     .map(
       (userData, index) =>
-        `<li ${
-          userData.username === currentUser?.username ? 'class="my-record"' : ''
-        }>
+        `<li>
       <span>${index + 1}</span>
-      <span>${userData.username}</span>
+      <span class="username">${userData.username}</span>
       <span>${formatRecordFromMs(userData.record)}</span>
       </li>`
     )
     .join('');
 
+  const currentUser = getFromLocalStorage('currentUser');
+
+  // currentUser가 없으면 my-result 안보이게 처리
   if (!currentUser) {
     document.querySelector('.result').style.display = 'none';
     return;
@@ -63,9 +64,22 @@ const renderRanks = () => {
   document.querySelector('.my-result').textContent = formatRecordFromMs(
     currentUser.record
   );
+
   document.querySelector('.total-players').textContent = fetchedData.length;
   document.querySelector('.return').textContent = 'Try Again';
-  if (currentUserRank < 5) return;
+
+  // currentUser가 5위 안에 드는 경우 my-record 클래스 이름 붙여주기
+  if (currentUserRank < 5) {
+    [...document.querySelector('.ranks-ol').children].forEach($li => {
+      $li.classList.toggle(
+        'my-record',
+        currentUser.username === $li.querySelector('.username').textContent
+      );
+    });
+    return;
+  }
+  
+  // 5위 안에 안 드는 경우에는 내 기록을 순위판 최하단에 붙여주기
   const newListItem = document.createElement('li');
   newListItem.classList.add('added');
   newListItem.innerHTML = `<span>${currentUserRank}</span>
