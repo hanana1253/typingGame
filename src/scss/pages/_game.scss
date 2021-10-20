@@ -1,4 +1,4 @@
-@import './reset', './default', './color', './mixin';
+@use '../base/' as *;
 
 .game-container {
   background-color: $darkblue1;

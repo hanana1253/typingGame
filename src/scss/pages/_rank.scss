@@ -1,4 +1,4 @@
-@import './reset', './default', './color', './mixin';
+@use '../base/' as *;
 
 @keyframes slide {
   0% {
@@ -46,7 +46,7 @@
 
     & .ranks-ol {
       width: 100%;
-      
+
       & > li {
         margin: 1vh;
         display: flex;

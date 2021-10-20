@@ -1,4 +1,4 @@
-@import './reset', './default', './color', './mixin';
+@use '../base/' as *;
 
 .entry-container {
   width: 100%;
