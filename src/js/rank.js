@@ -24,12 +24,8 @@ const renderRanks = () => {
   const myRank = 2;
   const myRecord = { mm: 1, ss: 30, ms: 0 };
 
-<<<<<<< HEAD
-=======
   // 전역상태변수에서 가져오는 함수
 
-
->>>>>>> 030a271b47ead1b1cd87b298cb1c5e16ff4a6a95
   document.querySelector('.ranks-ol').innerHTML = fetchedData
       .slice(0, 5)
       .map(
