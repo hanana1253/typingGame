@@ -1,0 +1,122 @@
+@import './reset', './default', './color', './mixin';
+
+@keyframes slide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.rankpage-heading {
+  margin: 0 10vw;
+  height: 20vh;
+  line-height: 15vh;
+  background-color: $lightblue;
+  text-align: center;
+  color: $darkblue2;
+  font-size: 5rem;
+}
+
+.ranking-list {
+  margin: 1vh auto;
+  width: 80vw;
+  padding: 2vh 3vw;
+  background-color: $gray6;
+  border-radius: 5px;
+
+  li {
+    margin: 1vh;
+    height: 6vh;
+    line-height: 6vh;
+    display: flex;
+    justify-content: space-between;
+
+    &.header-row {
+      font-size: 1.5rem;
+      background-color: $gray4;
+    }
+
+    span {
+      min-width: 20vw;
+      text-align: center;
+      vertical-align: middle;
+    }
+    &.my-record {
+      background-color: gold;
+      color: $red;
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 6vh;
+        transform: translateX(100%);
+        z-index: 1;
+        animation: slide 1.5s infinite 1s;
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.8) 50%,
+          rgba(128, 186, 232, 0) 99%,
+          rgba(125, 185, 232, 0) 100%
+        );
+      }
+    }
+    &.added {
+      margin-top: 3vh;
+      background-color: $lightblue;
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 6vh;
+        transform: translateX(100%);
+        z-index: 1;
+        animation: slide 1.5s infinite 1s;
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.8) 50%,
+          rgba(128, 186, 232, 0) 99%,
+          rgba(125, 185, 232, 0) 100%
+        );
+      }
+    }
+  }
+}
+
+.result {
+  background-color: $gray4;
+  margin: 0 10vw;
+  text-align: center;
+  vertical-align: bottom;
+  height: 18vh;
+  padding: 2vh;
+  line-height: 7vh;
+  &.added {
+    padding: 0;
+    height: 10vh;
+    line-height: 5vh;
+  }
+}
+
+.return {
+  background-color: $lightblue;
+  border-radius: 15px;
+  width: 40vw;
+  display: block;
+  text-align: center;
+  padding: 1.5vh 3vw;
+  font-size: 1.5rem;
+  margin: 1vh auto;
+
+  &:hover {
+    background-color: $darkblue1;
+    color: $white;
+  }
+}
