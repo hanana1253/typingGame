@@ -1,18 +1,18 @@
 // localStorage에서 가져온 데이터
 const fetchedData = [
-  { username: 'Bareum', record: { mm: 0, ss: 0, ms: 10 } },
-  { username: 'Chaeyoung', record: { mm: 0, ss: 10, ms: 0 } },
-  { username: 'Sohyeong', record: { mm: 0, ss: 20, ms: 0 } },
-  { username: 'Fastcampus', record: { mm: 0, ss: 40, ms: 0 } },
-  { username: 'Fastcampus2', record: { mm: 0, ss: 50, ms: 0 } },
-  { username: 'Fastcampus3', record: { mm: 0, ss: 60, ms: 0 } },
-  { username: 'Fastcampus4', record: { mm: 0, ss: 70, ms: 0 } },
-  { username: 'Fastcampus5', record: { mm: 0, ss: 80, ms: 0 } },
-  { username: 'Fastcampus6', record: { mm: 0, ss: 90, ms: 0 } },
-  { username: 'Fastcampus7', record: { mm: 1, ss: 0, ms: 0 } },
-  { username: 'Hangyul', record: { mm: 1, ss: 30, ms: 0 } },
-  { username: 'Fastcampus8', record: { mm: 2, ss: 40, ms: 0 } },
-  { username: 'Fastcampus9', record: { mm: 3, ss: 40, ms: 0 } }
+  { username: 'Bareum', record: 10 },
+  { username: 'Chaeyoung', record: 110 },
+  { username: 'Sohyeong', record: 1249 },
+  { username: 'Fastcampus', record: 1500 },
+  { username: 'Fastcampus2', record: 6000 },
+  { username: 'Fastcampus3', record: 1800 },
+  { username: 'Fastcampus4', record: 2000 },
+  { username: 'Fastcampus5', record: 2100 },
+  { username: 'Fastcampus6', record: 2300 },
+  { username: 'Fastcampus7', record: 2500 },
+  { username: 'Hangyul', record: 2930 },
+  { username: 'Fastcampus8', record: 6000 },
+  { username: 'Fastcampus9', record: 12930 }
 ];
 
 const renderRanks = () => {
@@ -22,7 +22,7 @@ const renderRanks = () => {
   // myName, myRank, myRecord는 전역변수 상태를 가져올 예정이라 임시로 선언해둠
   const myName = 'Chaeyoung';
   const myRank = 2;
-  const myRecord = { mm: 1, ss: 30, ms: 0 };
+  const myRecord = 100000;
 
   // 전역상태변수에서 가져오는 함수
 
@@ -33,14 +33,14 @@ const renderRanks = () => {
           `<li ${userData.username === myName ? 'class="my-record"' : ''}>
             <span>${index+1}</span>
             <span>${userData.username}</span>
-            <span>${formatRecord(userData.record)}</span>
+            <span>${formatRecordFromMs(userData.record)}</span>
           </li>`
       )
       .join('');
 
   // my-rank와 my-result는 전역변수 상태를 가져와 넣을 예정
   document.querySelector('.my-rank').textContent = myRank;
-  document.querySelector('.my-result').textContent = formatRecord(myRecord);
+  document.querySelector('.my-result').textContent = formatRecordFromMs(myRecord);
 
   document.querySelector('.total-players').textContent = fetchedData.length;
 
@@ -50,16 +50,19 @@ const renderRanks = () => {
   newListItem.classList.add('added');
   newListItem.innerHTML = `<span>${myRank}</span>
       <span>${myName}</span>
-      <span>${formatRecord(myRecord)}</span>`;
+      <span>${formatRecordFromMs(myRecord)}</span>`;
   document.querySelector('.ranks-ol').appendChild(newListItem);
   document.querySelector('.result').classList.add('added');
 };
 
 // utils로 빼둘 함수
-const formatRecord = (() => {
+const formatRecordFromMs = miliseconds => {
   // 1 => '01', 10 => '10'
+  const mm = parseInt(miliseconds / 6000) % 60;
+  const ss = parseInt(miliseconds / 100) % 60;
+  const ms = miliseconds % 100;
   const format = n => (n < 10 ? '0' + n : n + '');
-  return ({ mm, ss, ms }) => `${format(mm)}:${format(ss)}:${format(ms)}`;
-})();
+  return `${format(mm)}:${format(ss)}:${format(ms)}`;
+};
 
 document.addEventListener('DOMContentLoaded', renderRanks);
