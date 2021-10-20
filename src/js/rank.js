@@ -15,18 +15,19 @@ const fetchedData = [
   { username: 'Fastcampus9', record: { mm: 3, ss: 40, ms: 0 } }
 ];
 
-const render = () => {
+const renderRanks = () => {
   // 아직 로컬스토리지에 저장하지 않아서 가져올 수가 없으므로 아래 주석처리
-  // const fetchedData = window.localStorage('rankingList');
+  // const fetchedData = window.localStorage('ranksList');
 
   // myName, myRank, myRecord는 전역변수 상태를 가져올 예정이라 임시로 선언해둠
-  const myName = 'Hangyul';
-  const myRank = 11;
+  const myName = 'Chaeyoung';
+  const myRank = 2;
   const myRecord = { mm: 1, ss: 30, ms: 0 };
 
-  document.querySelector('.ranking-list').innerHTML =
-    '<li class="header-row"><span>Rank</span><span>Username</span><span>Record</span></li>' +
-    fetchedData
+  // 전역상태변수에서 가져오는 함수
+
+
+  document.querySelector('.ranks-ol').innerHTML = fetchedData
       .slice(0, 5)
       .map(
         (userData, index) =>
@@ -51,7 +52,7 @@ const render = () => {
   newListItem.innerHTML = `<span>${myRank}</span>
       <span>${myName}</span>
       <span>${formatRecord(myRecord)}</span>`;
-  document.querySelector('.ranking-list').appendChild(newListItem);
+  document.querySelector('.ranks-ol').appendChild(newListItem);
   document.querySelector('.result').classList.add('added');
 };
 
@@ -62,4 +63,4 @@ const formatRecord = (() => {
   return ({ mm, ss, ms }) => `${format(mm)}:${format(ss)}:${format(ms)}`;
 })();
 
-document.addEventListener('DOMContentLoaded', render);
+document.addEventListener('DOMContentLoaded', renderRanks);
