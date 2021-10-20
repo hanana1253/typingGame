@@ -49,7 +49,7 @@ const render = () => {
     $popupTitle.textContent = state.isBest ? 'Congraturations!!' : 'Good Job!!';
     $popupRecord.textContent =
       (state.isBest ? 'The highest record : ' : 'record : ') +
-      formatElapsedTime(elapsedTime);
+      formatElapsedTime(state.elapsedTime);
   }
 };
 
@@ -69,10 +69,11 @@ const timeHandler = () => {
 const finish = () => {
   clearInterval(timerId);
   const userRecord = {
-    username: getFromLocalStorage('currentUser')?.username || 'Anonymous',
+    username: getFromLocalStorage('currentUser', { username: 'Anonymous' })
+      .username,
     record: state.elapsedTime
   };
-  const localRecords = getFromLocalStorage('records') || [];
+  const localRecords = getFromLocalStorage('records', []);
   const records = [userRecord, ...localRecords].sort(
     (userRecord1, userRecord2) => {
       if (+userRecord1.record < +userRecord2.record) return -1;
@@ -87,6 +88,7 @@ const finish = () => {
   const isBest = records[0].username === userRecord.username;
   setState({ ...state, isBest, isFinished: true });
   setLocalStorage('records', records);
+  setLocalStorage('currentUser', userRecord);
 };
 
 const correct = () => {
