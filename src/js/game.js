@@ -2,12 +2,13 @@ import { getFromLocalStorage, setLocalStorage } from './utils.js';
 
 const WORDS = ['sigh', 'tense', 'airplane'];
 
-let elapsedTime = { mm: 0, ss: 0, ms: 0 };
+// let elapsedTime = 0;
 let timerId = null;
 
 let state = {
+  elapsedTime: 0,
   wordIndex: 0,
-  isFail: false,
+  isWrong: false,
   isFinished: false,
   isBest: false
 };
@@ -22,12 +23,25 @@ const $popupWrap = document.querySelector('.popup-wrap');
 const $popupTitle = document.querySelector('.popup-title');
 const $popupRecord = document.querySelector('.popup-record');
 
+const formatElapsedTime = (() => {
+  const format = n => (n < 10 ? '0' + n : n + '');
+
+  return elapsedTime => {
+    const [mm, ss, ms] = [
+      Math.floor(elapsedTime / 60000),
+      Math.floor((elapsedTime % 60000) / 1000),
+      Math.floor((elapsedTime % 1000) / 10)
+    ];
+    return `${format(mm)}:${format(ss)}:${format(ms)}`;
+  };
+})();
+
 const render = () => {
   $word.textContent = WORDS[state.wordIndex];
   $left.textContent = WORDS.length - state.wordIndex;
-  $input.classList.toggle('error', state.isFail);
-  $input.value = '';
-  $error.style.display = state.isFail ? 'block' : 'none';
+  $input.classList.toggle('error', state.isWrong);
+  $error.style.display = state.isWrong ? 'block' : 'none';
+  $time.textContent = formatElapsedTime(state.elapsedTime);
 
   if (state.isFinished) {
     $popupWrap.style.display = 'block';
@@ -35,7 +49,7 @@ const render = () => {
     $popupTitle.textContent = state.isBest ? 'Congraturations!!' : 'Good Job!!';
     $popupRecord.textContent =
       (state.isBest ? 'The highest record : ' : 'record : ') +
-      formatElapsedTime(elapsedTime);
+      formatElapsedTime(state.elapsedTime);
   }
 };
 
@@ -44,61 +58,47 @@ const setState = newState => {
   render();
 };
 
-const formatElapsedTime = (() => {
-  const format = n => (n < 10 ? '0' + n : n + '');
-  return ({ mm, ss, ms }) => `${format(mm)}:${format(ss)}:${format(ms)}`;
-})();
-
 const timeHandler = () => {
-  let { mm, ss, ms } = elapsedTime;
-
   timerId = setInterval(() => {
-    ms += 1;
-    if (ms >= 100) {
-      ss += 1;
-      ms = 0;
-    }
-    if (ss >= 60) {
-      mm += 1;
-      ss = 0;
-    }
-    elapsedTime = { mm, ss, ms };
-    $time.textContent = formatElapsedTime(elapsedTime);
+    // elapsedTime += 10;
+    // $time.textContent = formatElapsedTime(elapsedTime);
+    setState({ ...state, elapsedTime: state.elapsedTime + 10 });
   }, 10);
 };
 
 const finish = () => {
   clearInterval(timerId);
-  // 1. currentUser :{ username: -> getLocal , userRecord = elapsedTime }
-  // 2. get record list
-  // 3. list add userRecord
-  // 4. sort
-  // 5.  0번 인덱스가 === username ? isBest: true, false
-  // 6 새로 정렬된 리스트를 storage set
-  // 7. setState({...state, isBest, isFinish: true})
   const userRecord = {
-    username: getFromLocalStorage('currentUser').username,
-    record: elapsedTime
+    username: getFromLocalStorage('currentUser', { username: 'Anonymous' })
+      .username,
+    record: state.elapsedTime
   };
-  const localRecords = getFromLocalStorage('records') || [];
-  // localStorage 객체에 밀리세컨드 기록 넣어두기. 그 기록 빼와서 소팅하기
-  const records = [userRecord, ...localRecords];
+  const localRecords = getFromLocalStorage('records', []);
+  const records = [userRecord, ...localRecords].sort(
+    (userRecord1, userRecord2) => {
+      if (+userRecord1.record < +userRecord2.record) return -1;
+      if (+userRecord1.record > +userRecord2.record) return 1;
+      return userRecord1.username < userRecord2.username
+        ? -1
+        : userRecord1.username > userRecord2.username
+        ? 1
+        : 0;
+    }
+  );
   const isBest = records[0].username === userRecord.username;
   setState({ ...state, isBest, isFinished: true });
   setLocalStorage('records', records);
-  console.log('끝');
-
-  // 팝업 등장
+  setLocalStorage('currentUser', userRecord);
 };
 
 const correct = () => {
-  setState({ wordIndex: state.wordIndex + 1, isFail: false });
-
+  setState({ ...state, wordIndex: state.wordIndex + 1, isWrong: false });
+  $input.value = '';
   if (state.wordIndex === WORDS.length) {
     finish();
   }
 };
-const wrong = () => setState({ ...state, isFail: true });
+const wrong = () => setState({ ...state, isWrong: true });
 
 window.addEventListener('DOMContentLoaded', () => {
   render();
