@@ -1,0 +1,60 @@
+@use 'sass:math';
+
+// 미디어 쿼리 중단점 (Breakpoints) --------------------------------------------------------------- /
+$break: 768px;
+
+@mixin mobile {
+    @media (max-width: #{$break - 1}) {
+        @content;
+    }
+}
+@mixin desktop {
+    @media (min-width: #{$break}) {
+        @content;
+    }
+}
+
+// 루트 요소 기본 단위 --------------------------------------------------------------- /
+$rootUnit: 16px !default;
+
+// 단위 제거 함수 ------------------------------------------------------------------ /
+@function removeUnit($value){
+    // @return ($value / ($value * 0 + 1));
+    @return math.div($value, $value * 0 + 1);
+}
+
+// px을 rem 단위로 변경하는 함수 ------------------------------------------------------- /
+@function rem($value, $base: $rootUnit){
+    @return (removeUnit(math.div($value, $base))) * 1rem;
+}
+
+// px을 em 단위로 변경하는 함수 ------------------------------------------------------- /
+@function em($value, $base: $rootUnit){
+    @return (removeUnit(math.div($value, $base))) * 1em;
+}
+
+<<<<<<< HEAD
+=======
+
+>>>>>>> 030a271b47ead1b1cd87b298cb1c5e16ff4a6a95
+// ranking 반짝거리는 효과
+@mixin slidingEffect {
+    position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 6vh;
+        transform: translateX(100%);
+        z-index: 1;
+        animation: slide 1.5s infinite 1s;
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.8) 50%,
+          rgba(128, 186, 232, 0) 99%,
+          rgba(125, 185, 232, 0) 100%
+        );
+      }
+}
