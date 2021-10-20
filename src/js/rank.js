@@ -64,7 +64,6 @@ const renderRanks = () => {
   document.querySelector('.my-result').textContent = formatRecordFromMs(
     currentUser.record
   );
-
   document.querySelector('.total-players').textContent = fetchedData.length;
   document.querySelector('.return').textContent = 'Try Again';
 
