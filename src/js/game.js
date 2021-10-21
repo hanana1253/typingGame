@@ -4,14 +4,15 @@ import {
   formatRecordFromMs
 } from './utils.js';
 
-import { LS_KEY, WORDS } from './constant.js';
+import { LS_KEY, INITIAL_COUNTDOWN } from './constant.js';
+import word from './word.js';
 
 let timerId = null;
 let elapsedTime = 0;
 
 let state = {
-  currentWord: WORDS.getWord,
-  restCount: 5,
+  currentWord: word.getWord,
+  restCount: 3,
   isWrong: false,
   isFinished: false,
   isBest: false
@@ -78,7 +79,7 @@ const finish = () => {
 const correct = () => {
   setState({
     ...state,
-    currentWord: WORDS.getWord,
+    currentWord: word.getWord,
     restCount: state.restCount - 1,
     isWrong: false
   });
@@ -91,8 +92,20 @@ const correct = () => {
 const wrong = () => setState({ ...state, isWrong: true });
 
 window.addEventListener('DOMContentLoaded', () => {
-  render();
-  timeHandler();
+  let countDownTimer = null;
+  let countDown = INITIAL_COUNTDOWN;
+
+  document.querySelector('.count').textContent = 'READY';
+  countDownTimer = setInterval(() => {
+    document.querySelector('.count').textContent = countDown--;
+  }, 1000);
+
+  setTimeout(() => {
+    clearInterval(countDownTimer);
+    document.querySelector('.count-down').style.display = 'none';
+    render();
+    timeHandler();
+  }, (INITIAL_COUNTDOWN + 1) * 1000);
 });
 
 $input.onkeyup = e => {
