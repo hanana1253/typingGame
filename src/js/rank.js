@@ -1,65 +1,10 @@
+import { PAGE_VIEW_LIMIT } from './constant.js';
 import {
   setSessionStorage,
   getFromSessionStorage,
   getFromLocalStorage,
   formatRecordFromMs
 } from './utils.js';
-
-// localStorage에서 가져온 데이터
-// const fetchedData = [
-//   { username: 'Bareum', record: 100 },
-//   { username: 'Chaeyoung', record: 1100 },
-//   { username: 'Sohyeong', record: 12490 },
-//   { username: 'Fastcampus', record: 15000 },
-//   { username: 'Fastcampus2', record: 60000 },
-//   { username: 'Fastcampus3', record: 18000 },
-//   { username: 'Fastcampus4', record: 20000 },
-//   { username: 'Fastcampus5', record: 21000 },
-//   { username: 'Fastcampus6', record: 23000 },
-//   { username: 'Fastcampus7', record: 25000 },
-//   { username: 'Hangyul', record: 29300 },
-//   { username: 'Fastcampus8', record: 60000 },
-//   { username: 'Fastcampus2', record: 60000 },
-//   { username: 'Fastcampus3', record: 18000 },
-//   { username: 'Fastcampus4', record: 20000 },
-//   { username: 'Fastcampus5', record: 21000 },
-//   { username: 'Fastcampus6', record: 23000 },
-//   { username: 'Fastcampus7', record: 25000 },
-//   { username: 'Hangyul', record: 29300 },
-//   { username: 'Fastcampus8', record: 60000 },
-//   { username: 'Fastcampus2', record: 60000 },
-//   { username: 'Fastcampus3', record: 18000 },
-//   { username: 'Fastcampus4', record: 20000 },
-//   { username: 'Fastcampus5', record: 21000 },
-//   { username: 'Fastcampus6', record: 23000 },
-//   { username: 'Fastcampus7', record: 25000 },
-//   { username: 'Hangyul', record: 29300 },
-//   { username: 'Fastcampus8', record: 60000 },
-//   { username: 'Fastcampus2', record: 60000 },
-//   { username: 'Fastcampus3', record: 18000 },
-//   { username: 'Fastcampus4', record: 20000 },
-//   { username: 'Fastcampus5', record: 21000 },
-//   { username: 'Fastcampus6', record: 23000 },
-//   { username: 'Fastcampus7', record: 25000 },
-//   { username: 'Hangyul', record: 29300 },
-//   { username: 'Fastcampus8', record: 60000 },
-//   { username: 'Fastcampus2', record: 60000 },
-//   { username: 'Fastcampus3', record: 18000 },
-//   { username: 'Fastcampus4', record: 20000 },
-//   { username: 'Fastcampus5', record: 21000 },
-//   { username: 'Fastcampus6', record: 23000 },
-//   { username: 'Fastcampus7', record: 25000 },
-//   { username: 'Hangyul', record: 29300 },
-//   { username: 'Fastcampus8', record: 60000 },
-//   { username: 'Fastcampus9', record: 129300 }
-// ];
-
-// 실험용 localStorage 넣는 코드
-// window.localStorage.setItem('records', JSON.stringify(fetchedData));
-// window.localStorage.setItem(
-//   'currentUser',
-//   JSON.stringify({ username: 'Chaeyoung', record: 1100 })
-// );
 
 const rankState = {
   currentPage: getFromSessionStorage('currentPage', 1),
@@ -76,40 +21,46 @@ const renderRanks = () => {
     return;
   }
 
-  const LIMIT = 5;
-  rankState.lastPageNum = Math.ceil(records.length / LIMIT);
-  const currentPageRecords = records.slice(
-    (rankState.currentPage - 1) * LIMIT,
-    rankState.currentPage * LIMIT
-  );
+  rankState.lastPageNum = Math.ceil(records.length / PAGE_VIEW_LIMIT);
 
   // 5개씩 잘라서 보여주기.
-  document.querySelector('.ranks-table-body').innerHTML = currentPageRecords
-    .map(
-      ({ username, record }, index) =>
-        `<tr>
-        <td>${(rankState.currentPage - 1) * LIMIT + index + 1}</td>
+  document.querySelector('.ranks-table-body').innerHTML = (() => {
+    const currentPageRecords = records.slice(
+      (rankState.currentPage - 1) * PAGE_VIEW_LIMIT,
+      rankState.currentPage * PAGE_VIEW_LIMIT
+    );
+
+    return currentPageRecords
+      .map(
+        ({ username, record }, index) =>
+          `<tr>
+        <td>${(rankState.currentPage - 1) * PAGE_VIEW_LIMIT + index + 1}</td>
         <td class="username">${username}</td>
         <td>${formatRecordFromMs(record)}</td>
       </tr>`
-    )
-    .join('');
+      )
+      .join('');
+  })();
 
   // currentPage 따라 처리한 ul 요소 동적 생성 및 추가
-  const indexOfFirst =
-    Math.floor((rankState.currentPage - 1) / LIMIT) * LIMIT + 1;
-  const indexOfLast =
-    indexOfFirst + LIMIT - 1 < rankState.lastPageNum
-      ? indexOfFirst + LIMIT - 1
-      : rankState.lastPageNum;
+  document.querySelector('.page-nums').innerHTML = (() => {
+    const indexOfFirst =
+      Math.floor((rankState.currentPage - 1) / PAGE_VIEW_LIMIT) *
+        PAGE_VIEW_LIMIT +
+      1;
+    const indexOfLast =
+      indexOfFirst + PAGE_VIEW_LIMIT - 1 < rankState.lastPageNum
+        ? indexOfFirst + PAGE_VIEW_LIMIT - 1
+        : rankState.lastPageNum;
 
-  document.querySelector('.page-nums').innerHTML = Array.from(
-    { length: indexOfLast - indexOfFirst + 1 },
-    (_, i) =>
-      `<li ${
-        rankState.currentPage === indexOfFirst + i ? 'class="current"' : ''
-      }><a href="#">${indexOfFirst + i}</a></li>`
-  ).join('');
+    return Array.from(
+      { length: indexOfLast - indexOfFirst + 1 },
+      (_, i) =>
+        `<li ${
+          rankState.currentPage === indexOfFirst + i ? 'class="current"' : ''
+        }><a href="#">${indexOfFirst + i}</a></li>`
+    ).join('');
+  })();
 
   const currentUser = getFromLocalStorage('currentUser');
   // currentUser가 없으면 my-result 안보이게 처리
@@ -121,17 +72,10 @@ const renderRanks = () => {
   const currentUserRank =
     records.findIndex(({ username }) => username === currentUser.username) + 1;
 
-  // document.querySelector('.my-rank').textContent = currentUserRank;
-  // document.querySelector('.my-result').textContent = formatRecordFromMs(
-  //   currentUser.record
-  // );
-  // document.querySelector('.total-players').textContent = fetchedData.length;
-  // document.querySelector('.return').textContent = 'Try Again';
-
   // currentUser가 현재 View page 안에 있으면 my-record 클래스 이름 붙여주기
   if (
-    currentUserRank >= (rankState.currentPage - 1) * LIMIT + 1 &&
-    currentUserRank <= rankState.currentPage * LIMIT
+    currentUserRank >= (rankState.currentPage - 1) * PAGE_VIEW_LIMIT + 1 &&
+    currentUserRank <= rankState.currentPage * PAGE_VIEW_LIMIT
   ) {
     [...document.querySelector('.ranks-table-body').children].forEach($tr => {
       $tr.classList.toggle(
@@ -163,5 +107,13 @@ const renderRanks = () => {
     renderRanks();
   };
 });
+
+document.querySelector('.page-nums').onclick = e => {
+  if(!e.target.matches('.page-nums a')) return;
+  e.preventDefault();
+  rankState.currentPage = +e.target.textContent;
+  setSessionStorage('currentPage', rankState.currentPage);
+  renderRanks();
+};
 
 document.addEventListener('DOMContentLoaded', renderRanks);

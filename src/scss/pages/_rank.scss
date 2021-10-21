@@ -29,7 +29,7 @@
   padding: 2vh 3vw;
   background-color: $gray6;
   border-radius: 5px;
-  
+
   &-head {
     height: 8vh;
     line-height: 8vh;
@@ -37,9 +37,8 @@
     background-color: $darkblue1;
     color: $white;
     text-transform: uppercase;
-    
   }
-  
+
   & tr {
     margin: 1vh 1vw;
     height: 6vh;
@@ -47,33 +46,49 @@
     display: flex;
     justify-content: space-between;
     border-radius: 5px;
-    
+
     &.my-record {
       background-color: gold;
       color: $red;
       @include slidingEffect();
     }
 
-    th, td {
+    th,
+    td {
       min-width: 20vw;
       text-align: center;
       vertical-align: middle;
     }
   }
 }
-.page-control{
-  margin: 1vh 10vw;
+.page-control {
+  margin: 2vh 10vw;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 1.5rem;
 
   .page-nums {
     display: flex;
+    
     li {
-      margin: 0 5px;
+      margin: 0 2vw;
+      transition: transform ease-in 200ms;
+      &:hover {
+        transform: scale(1.5);
+      }
     }
     .current {
       color: $red;
+    }
+  }
+
+  > button {
+    background-color: transparent;
+    border-style: none;
+    transition: transform ease-in 200ms;
+    &:hover {
+      transform: scale(1.5);
     }
   }
 }

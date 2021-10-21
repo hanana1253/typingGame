@@ -7,9 +7,9 @@
     <title>Top Ranks</title>
     <link rel="stylesheet" href="./css/style.css" />
     <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
-  />
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+    />
   </head>
   <body>
     <div class="ranks-container">
@@ -22,15 +22,22 @@
             <th scope="col">Record</th>
           </tr>
         </thead>
-        <tbody class="ranks-table-body">
-        </tbody>
+        <tbody class="ranks-table-body"></tbody>
       </table>
       <div class="page-control">
-        <button class="prev-btn to-first">처음<span class="a11y-hidden">처음 페이지</span></button>
-        <button class="prev-btn to-prev">이전<span class="a11y-hidden">이전 페이지</span></button>
+        <button class="prev-btn to-first fas fa-angle-double-left">
+          <span class="a11y-hidden">처음 페이지</span>
+        </button>
+        <button class="prev-btn to-prev fas fa-angle-left">
+          <span class="a11y-hidden">이전 페이지</span>
+        </button>
         <ul class="page-nums"></ul>
-        <button class="next-btn to-next">다음<span class="a11y-hidden">다음 페이지</span></button>
-        <button class="next-btn to-last">마지막<span class="a11y-hidden">마지막 페이지</span></button>
+        <button class="next-btn to-next fas fa-angle-right">
+          <span class="a11y-hidden">다음 페이지</span>
+        </button>
+        <button class="next-btn to-last fas fa-angle-double-right">
+          <span class="a11y-hidden">마지막 페이지</span>
+        </button>
       </div>
       <div class="result">
         <!-- <h2>
