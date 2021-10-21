@@ -1,4 +1,5 @@
 import { getFromLocalStorage, setLocalStorage } from './utils.js';
+import { LS_KEY } from './constant.js';
 // test용
 // setLocalStorage('records', fetchedData);
 
