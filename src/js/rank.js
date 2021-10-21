@@ -30,10 +30,10 @@ import {
 
 
 const renderRanks = () => {
-  const records = getFromLocalStorage('records');
+  const records = getFromLocalStorage('records', []);
 
   // 데이터가 없는 경우, No records yet 메시지 노출 및 result 가린 후 return
-  if (!records) {
+  if (!records.length) {
     document.querySelector('.ranks-table-head').textContent = 'No records yet';
     document.querySelector('.page-control').classList.add('hidden');
     return;
