@@ -13,47 +13,54 @@ const rankState = {
 
 const renderRanks = () => {
   const records = getFromLocalStorage('records', []);
-
+  
   // 데이터가 없는 경우, No records yet 메시지 노출 및 result 가린 후 return
   if (!records.length) {
     document.querySelector('.ranks-table-head').textContent = 'No records yet';
     document.querySelector('.page-control').classList.add('hidden');
     return;
   }
-
+  
   rankState.lastPageNum = Math.ceil(records.length / PAGE_VIEW_LIMIT);
-  const currentPageRecords = records.slice(
-    (rankState.currentPage - 1) * PAGE_VIEW_LIMIT,
-    rankState.currentPage * PAGE_VIEW_LIMIT
-  );
-
+  
   // 5개씩 잘라서 보여주기.
-  document.querySelector('.ranks-table-body').innerHTML = currentPageRecords
-    .map(
-      ({ username, record }, index) =>
-        `<tr>
+  document.querySelector('.ranks-table-body').innerHTML = (() => {
+    const currentPageRecords = records.slice(
+      (rankState.currentPage - 1) * PAGE_VIEW_LIMIT,
+      rankState.currentPage * PAGE_VIEW_LIMIT
+    );
+
+    return currentPageRecords
+      .map(
+        ({ username, record }, index) =>
+          `<tr>
         <td>${(rankState.currentPage - 1) * PAGE_VIEW_LIMIT + index + 1}</td>
         <td class="username">${username}</td>
         <td>${formatRecordFromMs(record)}</td>
       </tr>`
-    )
-    .join('');
+      )
+      .join('');
+  })();
 
   // currentPage 따라 처리한 ul 요소 동적 생성 및 추가
-  const indexOfFirst =
-    Math.floor((rankState.currentPage - 1) / PAGE_VIEW_LIMIT) * PAGE_VIEW_LIMIT + 1;
-  const indexOfLast =
-    indexOfFirst + PAGE_VIEW_LIMIT - 1 < rankState.lastPageNum
-      ? indexOfFirst + PAGE_VIEW_LIMIT - 1
-      : rankState.lastPageNum;
+  document.querySelector('.page-nums').innerHTML = (() => {
+    const indexOfFirst =
+      Math.floor((rankState.currentPage - 1) / PAGE_VIEW_LIMIT) *
+        PAGE_VIEW_LIMIT +
+      1;
+    const indexOfLast =
+      indexOfFirst + PAGE_VIEW_LIMIT - 1 < rankState.lastPageNum
+        ? indexOfFirst + PAGE_VIEW_LIMIT - 1
+        : rankState.lastPageNum;
 
-  document.querySelector('.page-nums').innerHTML = Array.from(
-    { length: indexOfLast - indexOfFirst + 1 },
-    (_, i) =>
-      `<li ${
-        rankState.currentPage === indexOfFirst + i ? 'class="current"' : ''
-      }><a href="#">${indexOfFirst + i}</a></li>`
-  ).join('');
+    return Array.from(
+      { length: indexOfLast - indexOfFirst + 1 },
+      (_, i) =>
+        `<li ${
+          rankState.currentPage === indexOfFirst + i ? 'class="current"' : ''
+        }><a href="#">${indexOfFirst + i}</a></li>`
+    ).join('');
+  })();
 
   const currentUser = getFromLocalStorage('currentUser');
   // currentUser가 없으면 my-result 안보이게 처리
@@ -64,13 +71,6 @@ const renderRanks = () => {
 
   const currentUserRank =
     records.findIndex(({ username }) => username === currentUser.username) + 1;
-
-  // document.querySelector('.my-rank').textContent = currentUserRank;
-  // document.querySelector('.my-result').textContent = formatRecordFromMs(
-  //   currentUser.record
-  // );
-  // document.querySelector('.total-players').textContent = fetchedData.length;
-  // document.querySelector('.return').textContent = 'Try Again';
 
   // currentUser가 현재 View page 안에 있으면 my-record 클래스 이름 붙여주기
   if (

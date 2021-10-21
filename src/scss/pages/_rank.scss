@@ -62,15 +62,16 @@
   }
 }
 .page-control{
-  margin: 1vh 10vw;
+  margin: 2vh 10vw;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 1.5rem;
 
   .page-nums {
     display: flex;
     li {
-      margin: 0 5px;
+      margin: 0 2vw;
     }
     .current {
       color: $red;
