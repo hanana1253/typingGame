@@ -35,6 +35,8 @@ $input.oninput = () => {
     .classList.toggle('disabled', isNameExist || !isValidRegexp(inputName));
 };
 
+document.querySelector('.validate').onclick = {};
+
 document.querySelector('.entry-form').onsubmit = e => {
   e.preventDefault();
   setLocalStorage('currentUser', { username: $input.value });
