@@ -1,4 +1,5 @@
 import { getFromLocalStorage, setLocalStorage } from './utils.js';
+import { LS_KEY } from './constant.js';
 
 const validate = name => {
   const regexp = new RegExp(/^[ㄱ-ㅎ|가-힣|a-z|A-Z|]{1,15}$/);

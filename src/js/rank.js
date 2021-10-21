@@ -1,5 +1,6 @@
 import {
-  setLocalStorage,
+  setSessionStorage,
+  getFromSessionStorage,
   getFromLocalStorage,
   formatRecordFromMs
 } from './utils.js';
@@ -18,10 +19,42 @@ import {
 //   { username: 'Fastcampus7', record: 25000 },
 //   { username: 'Hangyul', record: 29300 },
 //   { username: 'Fastcampus8', record: 60000 },
+//   { username: 'Fastcampus2', record: 60000 },
+//   { username: 'Fastcampus3', record: 18000 },
+//   { username: 'Fastcampus4', record: 20000 },
+//   { username: 'Fastcampus5', record: 21000 },
+//   { username: 'Fastcampus6', record: 23000 },
+//   { username: 'Fastcampus7', record: 25000 },
+//   { username: 'Hangyul', record: 29300 },
+//   { username: 'Fastcampus8', record: 60000 },
+//   { username: 'Fastcampus2', record: 60000 },
+//   { username: 'Fastcampus3', record: 18000 },
+//   { username: 'Fastcampus4', record: 20000 },
+//   { username: 'Fastcampus5', record: 21000 },
+//   { username: 'Fastcampus6', record: 23000 },
+//   { username: 'Fastcampus7', record: 25000 },
+//   { username: 'Hangyul', record: 29300 },
+//   { username: 'Fastcampus8', record: 60000 },
+//   { username: 'Fastcampus2', record: 60000 },
+//   { username: 'Fastcampus3', record: 18000 },
+//   { username: 'Fastcampus4', record: 20000 },
+//   { username: 'Fastcampus5', record: 21000 },
+//   { username: 'Fastcampus6', record: 23000 },
+//   { username: 'Fastcampus7', record: 25000 },
+//   { username: 'Hangyul', record: 29300 },
+//   { username: 'Fastcampus8', record: 60000 },
+//   { username: 'Fastcampus2', record: 60000 },
+//   { username: 'Fastcampus3', record: 18000 },
+//   { username: 'Fastcampus4', record: 20000 },
+//   { username: 'Fastcampus5', record: 21000 },
+//   { username: 'Fastcampus6', record: 23000 },
+//   { username: 'Fastcampus7', record: 25000 },
+//   { username: 'Hangyul', record: 29300 },
+//   { username: 'Fastcampus8', record: 60000 },
 //   { username: 'Fastcampus9', record: 129300 }
 // ];
 
-// // 실험용 localStorage 넣는 코드
+// 실험용 localStorage 넣는 코드
 // window.localStorage.setItem('records', JSON.stringify(fetchedData));
 // window.localStorage.setItem(
 //   'currentUser',
@@ -29,7 +62,7 @@ import {
 // );
 
 const rankState = {
-  currentPage: getFromLocalStorage('currentPage', 1),
+  currentPage: getFromSessionStorage('currentPage', 1),
   lastPageNum: 1
 };
 
@@ -62,13 +95,20 @@ const renderRanks = () => {
     )
     .join('');
 
-  // 마지막 페이지넘버에 따라 ul 요소 동적 생성 및 추가
+  // currentPage 따라 처리한 ul 요소 동적 생성 및 추가
+  const indexOfFirst =
+    Math.floor((rankState.currentPage - 1) / LIMIT) * LIMIT + 1;
+  const indexOfLast =
+    indexOfFirst + LIMIT - 1 < rankState.lastPageNum
+      ? indexOfFirst + LIMIT - 1
+      : rankState.lastPageNum;
+
   document.querySelector('.page-nums').innerHTML = Array.from(
-    { length: rankState.lastPageNum },
+    { length: indexOfLast - indexOfFirst + 1 },
     (_, i) =>
       `<li ${
-        rankState.currentPage === i + 1 ? 'class="current"' : ''
-      }><a href="#">${i + 1}</a></li>`
+        rankState.currentPage === indexOfFirst + i ? 'class="current"' : ''
+      }><a href="#">${indexOfFirst + i}</a></li>`
   ).join('');
 
   const currentUser = getFromLocalStorage('currentUser');
@@ -108,7 +148,7 @@ const renderRanks = () => {
     rankState.currentPage = $btn.classList.contains('to-first')
       ? 1
       : rankState.currentPage - 1;
-    setLocalStorage('currentPage', rankState.currentPage);
+    setSessionStorage('currentPage', rankState.currentPage);
     renderRanks();
   };
 });
@@ -119,7 +159,7 @@ const renderRanks = () => {
     rankState.currentPage = $btn.classList.contains('to-last')
       ? rankState.lastPageNum
       : rankState.currentPage + 1;
-    setLocalStorage('currentPage', rankState.currentPage);
+    setSessionStorage('currentPage', rankState.currentPage);
     renderRanks();
   };
 });
