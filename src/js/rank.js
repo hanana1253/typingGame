@@ -1,4 +1,8 @@
-import { getFromLocalStorage, formatRecordFromMs } from './utils.js';
+import {
+  setLocalStorage,
+  getFromLocalStorage,
+  formatRecordFromMs
+} from './utils.js';
 
 // localStorage에서 가져온 데이터
 // const fetchedData = [
@@ -24,31 +28,43 @@ import { getFromLocalStorage, formatRecordFromMs } from './utils.js';
 //   JSON.stringify({ username: 'Chaeyoung', record: 1100 })
 // );
 
+
 const renderRanks = () => {
-  const fetchedData = getFromLocalStorage('records');
+  const records = getFromLocalStorage('records');
 
   // 데이터가 없는 경우, No records yet 메시지 노출 및 result 가린 후 return
-  if (!fetchedData) {
-    document.querySelector('.header-row').innerHTML = '<p>NO RECORDS YET</p>';
-    document.querySelector('.result').style.display = 'none';
+  if (!records) {
+    document.querySelector('.ranks-table-head').textContent = 'No records yet';
+    document.querySelector('.page-control').classList.add('hidden');
     return;
   }
 
-  // 5위까지 잘라서 보여주기.
-  document.querySelector('.ranks-ol').innerHTML = fetchedData
-    .slice(0, 5)
+  const LIMIT = 5;
+  rankState.lastPageNum = Math.ceil(records.length / LIMIT);
+  const currentPageRecords = records.slice(
+    (rankState.currentPage - 1) * LIMIT,
+    rankState.currentPage * LIMIT
+  );
+
+  // 5개씩 잘라서 보여주기.
+  document.querySelector('.ranks-table-body').innerHTML = currentPageRecords
     .map(
-      (userData, index) =>
-        `<li>
-      <span>${index + 1}</span>
-      <span class="username">${userData.username}</span>
-      <span>${formatRecordFromMs(userData.record)}</span>
-      </li>`
+      ({ username, record }, index) =>
+        `<tr>
+        <td>${(rankState.currentPage - 1) * LIMIT + index + 1}</td>
+        <td class="username">${username}</td>
+        <td>${formatRecordFromMs(record)}</td>
+      </tr>`
     )
     .join('');
 
-  const currentUser = getFromLocalStorage('currentUser');
+  // 마지막 페이지넘버에 따라 ul 요소 동적 생성 및 추가
+  document.querySelector('.page-nums').innerHTML = Array.from(
+    { length: rankState.lastPageNum },
+    (_, i) => `<li ${rankState.currentPage === i+1 ? 'class="current"':''}><a href="#">${i + 1}</a></li>`
+  ).join('');
 
+  const currentUser = getFromLocalStorage('currentUser');
   // currentUser가 없으면 my-result 안보이게 처리
   if (!currentUser) {
     document.querySelector('.result').style.display = 'none';
@@ -56,36 +72,64 @@ const renderRanks = () => {
   }
 
   const currentUserRank =
-    fetchedData.findIndex(
-      userData => userData.username === currentUser.username
-    ) + 1;
+    records.findIndex(({ username }) => username === currentUser.username) + 1;
 
-  document.querySelector('.my-rank').textContent = currentUserRank;
-  document.querySelector('.my-result').textContent = formatRecordFromMs(
-    currentUser.record
-  );
-  document.querySelector('.total-players').textContent = fetchedData.length;
-  document.querySelector('.return').textContent = 'Try Again';
+  // document.querySelector('.my-rank').textContent = currentUserRank;
+  // document.querySelector('.my-result').textContent = formatRecordFromMs(
+  //   currentUser.record
+  // );
+  // document.querySelector('.total-players').textContent = fetchedData.length;
+  // document.querySelector('.return').textContent = 'Try Again';
 
-  // currentUser가 5위 안에 드는 경우 my-record 클래스 이름 붙여주기
-  if (currentUserRank < 5) {
-    [...document.querySelector('.ranks-ol').children].forEach($li => {
-      $li.classList.toggle(
+  // currentUser가 현재 View page 안에 있으면 my-record 클래스 이름 붙여주기
+  if (
+    currentUserRank >= (rankState.currentPage - 1) * LIMIT + 1 &&
+    currentUserRank <= rankState.currentPage * LIMIT
+  ) {
+    [...document.querySelector('.ranks-table-body').children].forEach($tr => {
+      $tr.classList.toggle(
         'my-record',
-        currentUser.username === $li.querySelector('.username').textContent
+        currentUser.username === $tr.querySelector('.username').textContent
       );
     });
-    return;
   }
 
-  // 5위 안에 안 드는 경우에는 내 기록을 순위판 최하단에 붙여주기
-  const newListItem = document.createElement('li');
-  newListItem.classList.add('added');
-  newListItem.innerHTML = `<span>${currentUserRank}</span>
-      <span>${currentUser.username}</span>
-      <span>${formatRecordFromMs(currentUser.record)}</span>`;
-  document.querySelector('.ranks-ol').appendChild(newListItem);
-  document.querySelector('.result').classList.add('added');
-};
+//   // 5위 안에 안 드는 경우에는 내 기록을 순위판 최하단에 붙여주기
+//   const newListItem = document.createElement('li');
+//   newListItem.classList.add('added');
+//   newListItem.innerHTML = `<span>${currentUserRank}</span>
+//       <span>${currentUser.username}</span>
+//       <span>${formatRecordFromMs(currentUser.record)}</span>`;
+//   document.querySelector('.ranks-ol').appendChild(newListItem);
+//   document.querySelector('.result').classList.add('added');
+// 
+// };
+
+// const setState = (newStateKey, newStateValue) => {
+//   rankState[newStateKey] = newStateValue;
+//   renderRanks();
+// };
+
+[...document.querySelectorAll('.prev-btn')].forEach($btn => {
+  $btn.onclick = () => {
+    if (rankState.currentPage === 1) return;
+    rankState.currentPage = $btn.classList.contains('to-first')
+      ? 1
+      : rankState.currentPage - 1;
+    setLocalStorage('currentPage', rankState.currentPage);
+    renderRanks();
+  };
+});
+
+[...document.querySelectorAll('.next-btn')].forEach($btn => {
+  $btn.onclick = () => {
+    if (rankState.currentPage === rankState.lastPageNum) return;
+    rankState.currentPage = $btn.classList.contains('to-last')
+      ? rankState.lastPageNum
+      : rankState.currentPage + 1;
+    setLocalStorage('currentPage', rankState.currentPage);
+    renderRanks();
+  };
+});
 
 document.addEventListener('DOMContentLoaded', renderRanks);
