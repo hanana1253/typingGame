@@ -76,6 +76,16 @@
       color: $red;
     }
   }
+
+  > button {
+    background-color: transparent;
+    border-style: none;
+
+    &:hover {
+      transform: scale(1.5);
+    }
+  }
+
 }
 
 .result {
