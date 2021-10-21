@@ -1,4 +1,8 @@
-import { getFromLocalStorage, formatRecordFromMs } from './utils.js';
+import {
+  setLocalStorage,
+  getFromLocalStorage,
+  formatRecordFromMs
+} from './utils.js';
 
 // // localStorage에서 가져온 데이터
 const fetchedData = [
@@ -27,6 +31,12 @@ window.localStorage.setItem(
 //   'currentPage',
 //   JSON.stringify(1)
 // );
+
+const rankState = {
+  currentPage: getFromLocalStorage('currentPage', 1),
+  lastPageNum: 1
+};
+
 const renderRanks = () => {
   const records = getFromLocalStorage('records');
 
@@ -37,12 +47,11 @@ const renderRanks = () => {
     return;
   }
 
-  const currentPage = getFromLocalStorage('currentPage', 1);
-
   const LIMIT = 5;
+  rankState.lastPageNum = Math.ceil(records.length / LIMIT);
   const currentPageRecords = records.slice(
-    (currentPage - 1) * LIMIT,
-    currentPage * LIMIT
+    (rankState.currentPage - 1) * LIMIT,
+    rankState.currentPage * LIMIT
   );
 
   // 5개씩 잘라서 보여주기.
@@ -50,12 +59,18 @@ const renderRanks = () => {
     .map(
       ({ username, record }, index) =>
         `<tr>
-      <td>${(currentPage - 1) * LIMIT + index + 1}</td>
-      <td class="username">${username}</td>
-      <td>${formatRecordFromMs(record)}</td>
+        <td>${(rankState.currentPage - 1) * LIMIT + index + 1}</td>
+        <td class="username">${username}</td>
+        <td>${formatRecordFromMs(record)}</td>
       </tr>`
     )
     .join('');
+
+  // 마지막 페이지넘버에 따라 ul 요소 동적 생성 및 추가
+  document.querySelector('.page-nums').innerHTML = Array.from(
+    { length: rankState.lastPageNum },
+    (_, i) => `<li ${rankState.currentPage === i+1 ? 'class="current"':''}><a href="#">${i + 1}</a></li>`
+  ).join('');
 
   const currentUser = getFromLocalStorage('currentUser');
   // currentUser가 없으면 my-result 안보이게 처리
@@ -76,8 +91,8 @@ const renderRanks = () => {
 
   // currentUser가 현재 View page 안에 있으면 my-record 클래스 이름 붙여주기
   if (
-    currentUserRank >= (currentPage - 1) * LIMIT + 1 &&
-    currentUserRank <= currentPage * LIMIT
+    currentUserRank >= (rankState.currentPage - 1) * LIMIT + 1 &&
+    currentUserRank <= rankState.currentPage * LIMIT
   ) {
     [...document.querySelector('.ranks-table-body').children].forEach($tr => {
       $tr.classList.toggle(
@@ -87,5 +102,32 @@ const renderRanks = () => {
     });
   }
 };
+
+// const setState = (newStateKey, newStateValue) => {
+//   rankState[newStateKey] = newStateValue;
+//   renderRanks();
+// };
+
+[...document.querySelectorAll('.prev-btn')].forEach($btn => {
+  $btn.onclick = () => {
+    if (rankState.currentPage === 1) return;
+    rankState.currentPage = $btn.classList.contains('to-first')
+      ? 1
+      : rankState.currentPage - 1;
+    setLocalStorage('currentPage', rankState.currentPage);
+    renderRanks();
+  };
+});
+
+[...document.querySelectorAll('.next-btn')].forEach($btn => {
+  $btn.onclick = () => {
+    if (rankState.currentPage === rankState.lastPageNum) return;
+    rankState.currentPage = $btn.classList.contains('to-last')
+      ? rankState.lastPageNum
+      : rankState.currentPage + 1;
+    setLocalStorage('currentPage', rankState.currentPage);
+    renderRanks();
+  };
+});
 
 document.addEventListener('DOMContentLoaded', renderRanks);
