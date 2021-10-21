@@ -28,12 +28,16 @@ import {
 //   JSON.stringify({ username: 'Chaeyoung', record: 1100 })
 // );
 
+const rankState = {
+  currentPage: getFromLocalStorage('currentPage', 1),
+  lastPageNum: 1
+};
 
 const renderRanks = () => {
-  const records = getFromLocalStorage('records');
+  const records = getFromLocalStorage('records', []);
 
   // 데이터가 없는 경우, No records yet 메시지 노출 및 result 가린 후 return
-  if (!records) {
+  if (!records.length) {
     document.querySelector('.ranks-table-head').textContent = 'No records yet';
     document.querySelector('.page-control').classList.add('hidden');
     return;
@@ -61,7 +65,10 @@ const renderRanks = () => {
   // 마지막 페이지넘버에 따라 ul 요소 동적 생성 및 추가
   document.querySelector('.page-nums').innerHTML = Array.from(
     { length: rankState.lastPageNum },
-    (_, i) => `<li ${rankState.currentPage === i+1 ? 'class="current"':''}><a href="#">${i + 1}</a></li>`
+    (_, i) =>
+      `<li ${
+        rankState.currentPage === i + 1 ? 'class="current"' : ''
+      }><a href="#">${i + 1}</a></li>`
   ).join('');
 
   const currentUser = getFromLocalStorage('currentUser');
@@ -93,22 +100,7 @@ const renderRanks = () => {
       );
     });
   }
-
-//   // 5위 안에 안 드는 경우에는 내 기록을 순위판 최하단에 붙여주기
-//   const newListItem = document.createElement('li');
-//   newListItem.classList.add('added');
-//   newListItem.innerHTML = `<span>${currentUserRank}</span>
-//       <span>${currentUser.username}</span>
-//       <span>${formatRecordFromMs(currentUser.record)}</span>`;
-//   document.querySelector('.ranks-ol').appendChild(newListItem);
-//   document.querySelector('.result').classList.add('added');
-// 
-// };
-
-// const setState = (newStateKey, newStateValue) => {
-//   rankState[newStateKey] = newStateValue;
-//   renderRanks();
-// };
+};
 
 [...document.querySelectorAll('.prev-btn')].forEach($btn => {
   $btn.onclick = () => {
