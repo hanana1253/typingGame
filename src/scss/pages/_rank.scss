@@ -9,10 +9,6 @@
   }
 }
 
-.ranks-container {
-  min-width: 768px;
-}
-
 .ranks-heading {
   margin: 0 10vw;
   height: 20vh;
@@ -23,53 +19,37 @@
   font-size: 5rem;
 }
 
-.ranks-ul {
+.ranks-table {
   margin: 1vh 10vw;
   padding: 2vh 3vw;
   background-color: $gray6;
   border-radius: 5px;
+  
+  &-head {
+    height: 6vh;
+    line-height: 8vh;
+    font-size: 1.5rem;
+    background-color: $gray4;
+  }
 
-  & > li {
-    margin: 1vh;
+  & tr {
+    width: 80vw;
+    margin: 1vh 0;
+    height: 6vh;
+    line-height: 6vh;
     display: flex;
     justify-content: space-between;
     
-
-    &.header-row {
-      height: 6vh;
-      line-height: 6vh;
-      font-size: 1.5rem;
-      background-color: $gray4;
+    &.my-record {
+      background-color: gold;
+      color: $red;
+      @include slidingEffect();
     }
 
-    span {
+    th, td {
       min-width: 20vw;
       text-align: center;
       vertical-align: middle;
-    }
-
-    & .ranks-ol {
-      width: 100%;
-
-      & > li {
-        margin: 1vh;
-        display: flex;
-        justify-content: space-between;
-        height: 6vh;
-        line-height: 6vh;
-
-        &.my-record {
-          background-color: gold;
-          color: $red;
-          @include slidingEffect();
-        }
-
-        &.added {
-          margin-top: 3vh;
-          background-color: $lightblue;
-          @include slidingEffect();
-        }
-      }
     }
   }
 }
