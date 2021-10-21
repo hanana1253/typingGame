@@ -1,5 +1,6 @@
 import {
-  setLocalStorage,
+  setSessionStorage,
+  getFromSessionStorage,
   getFromLocalStorage,
   formatRecordFromMs
 } from './utils.js';
@@ -61,7 +62,7 @@ import {
 // );
 
 const rankState = {
-  currentPage: getFromLocalStorage('currentPage', 1),
+  currentPage: getFromSessionStorage('currentPage', 1),
   lastPageNum: 1
 };
 
@@ -147,7 +148,7 @@ const renderRanks = () => {
     rankState.currentPage = $btn.classList.contains('to-first')
       ? 1
       : rankState.currentPage - 1;
-    setLocalStorage('currentPage', rankState.currentPage);
+    setSessionStorage('currentPage', rankState.currentPage);
     renderRanks();
   };
 });
@@ -158,7 +159,7 @@ const renderRanks = () => {
     rankState.currentPage = $btn.classList.contains('to-last')
       ? rankState.lastPageNum
       : rankState.currentPage + 1;
-    setLocalStorage('currentPage', rankState.currentPage);
+    setSessionStorage('currentPage', rankState.currentPage);
     renderRanks();
   };
 });
