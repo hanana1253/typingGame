@@ -1,19 +1,18 @@
 import { PAGE_VIEW_LIMIT } from './constant.js';
 import {
-  setSessionStorage,
-  getFromSessionStorage,
   getFromLocalStorage,
   formatRecordFromMs
 } from './utils.js';
 
 const state = {
-  currentPage: getFromSessionStorage('currentPage', 1),
-  lastPageNum: 1
+  currentPage: 1,
+  lastPageNum: 0
 };
+
 const currentUser = getFromLocalStorage('currentUser', '');
 const records = getFromLocalStorage('records', []);
 
-const renderRanks = () => {
+const render = () => {
 
   // 데이터가 없는 경우, No records yet 메시지 노출 및 page-control hidden 후 return
   if (!records.length) {
@@ -75,8 +74,7 @@ const renderRanks = () => {
     state.currentPage = $btn.classList.contains('to-first')
       ? 1
       : state.currentPage - 1;
-    setSessionStorage('currentPage', state.currentPage);
-    renderRanks();
+    render();
   };
 });
 
@@ -86,8 +84,7 @@ const renderRanks = () => {
     state.currentPage = $btn.classList.contains('to-last')
       ? state.lastPageNum
       : state.currentPage + 1;
-    setSessionStorage('currentPage', state.currentPage);
-    renderRanks();
+    render();
   };
 });
 
@@ -95,8 +92,7 @@ document.querySelector('.page-nums').onclick = e => {
   if (!e.target.matches('.page-nums a')) return;
   e.preventDefault();
   state.currentPage = +e.target.textContent;
-  setSessionStorage('currentPage', state.currentPage);
-  renderRanks();
+  render();
 };
 
-document.addEventListener('DOMContentLoaded', renderRanks);
+document.addEventListener('DOMContentLoaded', render);
