@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko-KR">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -8,30 +8,30 @@
     <link rel="stylesheet" href="./src/css/style.css" />
   </head>
   <body>
-    <section class="entry-container">
+    <main class="entry-container">
       <h1 class="title">Typing game</h1>
-      <main>
-        <h2 class="a11y-hidden">타이핑 게임 입장</h2>
-        <form class="entry-form">
+      <div class="entry-form">
+        <form>
           <fieldset>
-            <legend class="a11y-hidden">타이핑 게임 폼</legend>
+            <legend class="a11y-hidden">Typing game form</legend>
             <div class="input-container user-name">
-              <label for="userName" class="a11y-hidden">유저 이름</label>
+              <label for="userName" class="a11y-hidden">User name</label>
               <input
                 type="text"
                 id="userName"
                 class="entry-form-input"
                 name="username"
-                placeholder="닉네임을 입력해주세요"
+                placeholder="Please enter your name"
               />
               <div class="error"></div>
+              <button typs="button">OK</button>
             </div>
-            <button class="button start disabled">시작하기</button>
-            <a href="./src/ranks.html" class="button rank">랭킹보기</a>
           </fieldset>
         </form>
-      </main>
-    </section>
+        <a class="button start disabled">START</a>
+        <a href="./src/ranks.html" class="button rank">RANKS</a>
+      </div>
+    </main>
 
     <script type="module" src="./src/js/entry.js"></script>
   </body>
