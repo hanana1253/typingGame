@@ -1,6 +1,6 @@
 import { getFromLocalStorage, formatRecordFromMs } from './utils.js';
 
-// // localStorage에서 가져온 데이터
+// localStorage에서 가져온 데이터
 // const fetchedData = [
 //   { username: 'Bareum', record: 100 },
 //   { username: 'Chaeyoung', record: 1100 },
@@ -17,7 +17,7 @@ import { getFromLocalStorage, formatRecordFromMs } from './utils.js';
 //   { username: 'Fastcampus9', record: 129300 }
 // ];
 
-// // // 실험용 localStorage 넣는 코드
+// // 실험용 localStorage 넣는 코드
 // window.localStorage.setItem('records', JSON.stringify(fetchedData));
 // window.localStorage.setItem(
 //   'currentUser',
