@@ -6,7 +6,7 @@ import { getFromLocalStorage, setLocalStorage } from './utils.js';
 // const setCurrentUser = userName =>
 //   localStorage.setItem('currentUser', userName);
 
-const isValidRegexp = name => {
+const validate = name => {
   const regexp = new RegExp(/^[ㄱ-ㅎ|가-힣|a-z|A-Z|]{4,25}$/);
   return regexp.test(name);
 };
@@ -15,28 +15,30 @@ const isValidRegexp = name => {
 const $input = document.getElementById('userName');
 
 $input.oninput = () => {
-  const inputName = $input.value;
+  const username = $input.value;
 
-  const isNameExist =
-    getFromLocalStorage('records', []).findIndex(
-      record => record.username === inputName
-    ) >= 0;
+  const isValid = validate(username);
+  const isUnique = getFromLocalStorage('records', []).every(
+    record => record.username !== username
+  );
 
-  const error = document.querySelector('.error');
+  document.querySelector('.error').textContent = isUnique
+    ? isValid
+      ? ''
+      : '이름은 4~25자 사이의 문자로 사용할 수 있습니다.'
+    : '이미 사용중인 이름입니다.';
 
-  error.textContent = isNameExist
-    ? '이미 사용중인 이름입니다.'
-    : !isValidRegexp(inputName)
-    ? '이름은 4~25자 사이의 문자로 사용할 수 있습니다.'
-    : '';
-
-  document
-    .querySelector('.start')
-    .classList.toggle('disabled', isNameExist || !isValidRegexp(inputName));
+  document.querySelector('.start').disabled = !(isUnique && isValid);
 };
 
 document.querySelector('.entry-form').onsubmit = e => {
+  // TODO:
+  // if(!(validate(username) && getFromLocalStorage('records', []).every(
+  //   record => record.username !== username
+  // )) return;
+
   e.preventDefault();
   setLocalStorage('currentUser', { username: $input.value });
+  // TODO: 알아보기g
   window.location.assign('src/game.html');
 };
