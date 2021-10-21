@@ -36,6 +36,7 @@ $rootUnit: 16px !default;
 // ranking 반짝거리는 효과
 @mixin slidingEffect {
     position: relative;
+    overflow: hidden;
       &::after {
         content: '';
         position: absolute;

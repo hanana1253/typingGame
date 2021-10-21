@@ -24,8 +24,7 @@
 }
 
 .ranks-ul {
-  margin: 1vh auto;
-  width: 80vw;
+  margin: 1vh 10vw;
   padding: 2vh 3vw;
   background-color: $gray6;
   border-radius: 5px;
@@ -34,6 +33,7 @@
     margin: 1vh;
     display: flex;
     justify-content: space-between;
+    
 
     &.header-row {
       height: 6vh;
