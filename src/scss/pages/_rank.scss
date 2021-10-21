@@ -9,10 +9,14 @@
   }
 }
 
+.hidden {
+  display: none !important;
+}
+
 .ranks-heading {
-  margin: 0 10vw;
+  margin: 2vh 10vw;
   height: 20vh;
-  line-height: 15vh;
+  line-height: 20vh;
   background-color: $lightblue;
   text-align: center;
   color: $darkblue2;
@@ -20,25 +24,29 @@
 }
 
 .ranks-table {
+  width: 80vw;
   margin: 1vh 10vw;
   padding: 2vh 3vw;
   background-color: $gray6;
   border-radius: 5px;
   
   &-head {
-    height: 6vh;
+    height: 8vh;
     line-height: 8vh;
     font-size: 1.5rem;
-    background-color: $gray4;
+    background-color: $darkblue1;
+    color: $white;
+    text-transform: uppercase;
+    
   }
-
+  
   & tr {
-    width: 80vw;
-    margin: 1vh 0;
+    margin: 1vh 1vw;
     height: 6vh;
     line-height: 6vh;
     display: flex;
     justify-content: space-between;
+    border-radius: 5px;
     
     &.my-record {
       background-color: gold;
@@ -52,6 +60,11 @@
       vertical-align: middle;
     }
   }
+}
+.page-control{
+  margin: 1vh 10vw;
+  display: flex;
+  justify-content: center;
 }
 
 .result {
