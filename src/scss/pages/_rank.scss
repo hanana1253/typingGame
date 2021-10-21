@@ -65,6 +65,17 @@
   margin: 1vh 10vw;
   display: flex;
   justify-content: center;
+  align-items: center;
+
+  .page-nums {
+    display: flex;
+    li {
+      margin: 0 5px;
+    }
+    .current {
+      color: $red;
+    }
+  }
 }
 
 .result {
