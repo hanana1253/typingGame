@@ -14,12 +14,12 @@
     <title>Typing Game</title>
   </head>
   <body>
-    <div class="game-container">
+    <main class="game-container">
       <div class="game">
         <h1 class="title">Typing Game</h1>
         <small>Type the following:</small>
 
-        <h2 class="word"></h2>
+        <p class="word"></p>
 
         <input
           type="text"
@@ -28,20 +28,21 @@
           placeholder="Type the word here..."
           autofocus
         />
-        <div class="error">틀렸습니다. 다시 입력하세요</div>
+        <div class="error">That's wrong. Please type it again.</div>
 
         <p class="time-container">Time: <span class="time">00:00:00</span></p>
 
         <p class="left-container">Left words: <span class="left">0</span></p>
+        <audio src="./audios/keyboard.wav"></audio>
       </div>
-    </div>
+    </main>
     <div class="popup-wrap">
       <div class="popup">
         <h2 class="popup-title"></h2>
         <p class="popup-record"></p>
         <div class="button-group">
-          <a href="./ranks.html" class="button">랭킹 보기</a>
-          <a href="./index.html" class="button">메인 페이지로</a>
+          <a href="./ranks.html" class="button">Ranking</a>
+          <a href="../index.html" class="button">Main Page</a>
         </div>
       </div>
     </div>
