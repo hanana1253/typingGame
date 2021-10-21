@@ -1,4 +1,5 @@
 import { getFromLocalStorage, setLocalStorage } from './utils.js';
+import { LS_KEY } from './constant.js';
 // test용
 // setLocalStorage('records', fetchedData);
 
@@ -18,7 +19,7 @@ $input.oninput = () => {
   const inputName = $input.value;
 
   const isNameExist =
-    getFromLocalStorage('records', []).findIndex(
+    getFromLocalStorage(LS_KEY.RECORDS, []).findIndex(
       record => record.username === inputName
     ) >= 0;
 
@@ -37,6 +38,6 @@ $input.oninput = () => {
 
 document.querySelector('.entry-form').onsubmit = e => {
   e.preventDefault();
-  setLocalStorage('currentUser', { username: $input.value });
+  setLocalStorage(LS_KEY.CURRENT_USER, { username: $input.value });
   window.location.assign('src/game.html');
 };

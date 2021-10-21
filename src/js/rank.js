@@ -1,4 +1,5 @@
 import { getFromLocalStorage, formatRecordFromMs } from './utils.js';
+import { LS_KEY } from './constant.js';
 
 // localStorage에서 가져온 데이터
 const fetchedData = [
@@ -25,7 +26,7 @@ window.localStorage.setItem(
 );
 
 const renderRanks = () => {
-  const fetchedData = getFromLocalStorage('records');
+  const fetchedData = getFromLocalStorage(LS_KEY.RECORDS);
 
   // 데이터가 없는 경우, No records yet 메시지 노출 및 result 가린 후 return
   if (!fetchedData) {
@@ -47,7 +48,7 @@ const renderRanks = () => {
     )
     .join('');
 
-  const currentUser = getFromLocalStorage('currentUser');
+  const currentUser = getFromLocalStorage(LS_KEY.CURRENT_USER);
 
   // currentUser가 없으면 my-result 안보이게 처리
   if (!currentUser) {
@@ -77,7 +78,7 @@ const renderRanks = () => {
     });
     return;
   }
-  
+
   // 5위 안에 안 드는 경우에는 내 기록을 순위판 최하단에 붙여주기
   const newListItem = document.createElement('li');
   newListItem.classList.add('added');
