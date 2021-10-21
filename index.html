@@ -1,38 +1,43 @@
 <!DOCTYPE html>
-<html lang="ko-KR">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Typing game</title>
     <link rel="stylesheet" href="./src/css/style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <section class="entry-container">
+    <main class="entry-container">
       <h1 class="title">Typing game</h1>
-      <main>
-        <h2 class="a11y-hidden">타이핑 게임 입장</h2>
+      <div class="form-container">
         <form class="entry-form">
           <fieldset>
-            <legend class="a11y-hidden">타이핑 게임 폼</legend>
+            <legend class="a11y-hidden">Typing game form</legend>
             <div class="input-container user-name">
-              <label for="userName" class="a11y-hidden">유저 이름</label>
+              <label for="userName" class="a11y-hidden">User name</label>
               <input
                 type="text"
                 id="userName"
-                class="entry-form-input"
+                class="form-input"
                 name="username"
-                placeholder="닉네임을 입력해주세요"
+                placeholder="Please enter your name"
               />
               <div class="error"></div>
+              <button class="validate">
+                <i class="bx bx-x"></i>
+              </button>
             </div>
-            <a href="src/game.html" class="button start disabled">시작하기</a>
-            <a href="./src/ranks.html" class="button rank">랭킹보기</a>
           </fieldset>
         </form>
-      </main>
-    </section>
-
+        <a href="./src/game.html" class="button start disabled">START</a>
+        <a href="./src/ranks.html" class="button rank">RANKS</a>
+      </div>
+    </main>
     <script type="module" src="./src/js/entry.js"></script>
   </body>
 </html>
