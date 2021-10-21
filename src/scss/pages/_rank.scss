@@ -48,7 +48,7 @@
     border-radius: 5px;
 
     &.my-record {
-      background-color: gold;
+      background-color: rgb(247, 235, 135);
       color: $red;
       @include slidingEffect();
     }
@@ -70,7 +70,7 @@
 
   .page-nums {
     display: flex;
-    
+
     li {
       margin: 0 2vw;
       transition: transform ease-in 200ms;
@@ -94,30 +94,28 @@
 }
 
 .result {
-  margin: 0 10vw;
-  height: 18vh;
-  line-height: 7vh;
-  text-align: center;
-  vertical-align: bottom;
-  background-color: $gray4;
+  margin: 3vh 10vw;
   padding: 2vh;
-  &.added {
-    height: 10vh;
-    line-height: 5vh;
-    padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $gray4;
+  font-size: 1.2rem;
+  p {
+    margin: 2vh;
   }
 }
 
 .return {
-  display: block;
+  margin: 1vh auto;
+  padding: 1.5vh 3vw;
   width: 40vw;
-  background-color: $lightblue;
+  display: block;
   border-radius: 15px;
   border: 2px solid $darkblue2;
+  background-color: $lightblue;
   text-align: center;
-  padding: 1.5vh 3vw;
   font-size: 1.5rem;
-  margin: 1vh auto;
 
   &:hover {
     background-color: $darkblue1;
