@@ -13,16 +13,16 @@ const rankState = {
 
 const renderRanks = () => {
   const records = getFromLocalStorage('records', []);
-  
+
   // 데이터가 없는 경우, No records yet 메시지 노출 및 result 가린 후 return
   if (!records.length) {
     document.querySelector('.ranks-table-head').textContent = 'No records yet';
     document.querySelector('.page-control').classList.add('hidden');
     return;
   }
-  
+
   rankState.lastPageNum = Math.ceil(records.length / PAGE_VIEW_LIMIT);
-  
+
   // 5개씩 잘라서 보여주기.
   document.querySelector('.ranks-table-body').innerHTML = (() => {
     const currentPageRecords = records.slice(
@@ -107,5 +107,13 @@ const renderRanks = () => {
     renderRanks();
   };
 });
+
+document.querySelector('.page-nums').onclick = e => {
+  if(!e.target.matches('.page-nums a')) return;
+  e.preventDefault();
+  rankState.currentPage = +e.target.textContent;
+  setSessionStorage('currentPage', rankState.currentPage);
+  renderRanks();
+};
 
 document.addEventListener('DOMContentLoaded', renderRanks);
