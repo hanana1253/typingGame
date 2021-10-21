@@ -4,7 +4,7 @@ import {
   getFromSessionStorage,
   getFromLocalStorage,
   formatRecordFromMs
-} from './utils.js';
+} from './storage.js';
 
 const rankState = {
   currentPage: getFromSessionStorage('currentPage', 1),
@@ -109,7 +109,7 @@ const renderRanks = () => {
 });
 
 document.querySelector('.page-nums').onclick = e => {
-  if(!e.target.matches('.page-nums a')) return;
+  if (!e.target.matches('.page-nums a')) return;
   e.preventDefault();
   rankState.currentPage = +e.target.textContent;
   setSessionStorage('currentPage', rankState.currentPage);
