@@ -1,5 +1,6 @@
 import {
-  setLocalStorage,
+  setSessionStorage,
+  getFromSessionStorage,
   getFromLocalStorage,
   formatRecordFromMs
 } from './utils.js';
@@ -18,22 +19,58 @@ import {
 //   { username: 'Fastcampus7', record: 25000 },
 //   { username: 'Hangyul', record: 29300 },
 //   { username: 'Fastcampus8', record: 60000 },
+//   { username: 'Fastcampus2', record: 60000 },
+//   { username: 'Fastcampus3', record: 18000 },
+//   { username: 'Fastcampus4', record: 20000 },
+//   { username: 'Fastcampus5', record: 21000 },
+//   { username: 'Fastcampus6', record: 23000 },
+//   { username: 'Fastcampus7', record: 25000 },
+//   { username: 'Hangyul', record: 29300 },
+//   { username: 'Fastcampus8', record: 60000 },
+//   { username: 'Fastcampus2', record: 60000 },
+//   { username: 'Fastcampus3', record: 18000 },
+//   { username: 'Fastcampus4', record: 20000 },
+//   { username: 'Fastcampus5', record: 21000 },
+//   { username: 'Fastcampus6', record: 23000 },
+//   { username: 'Fastcampus7', record: 25000 },
+//   { username: 'Hangyul', record: 29300 },
+//   { username: 'Fastcampus8', record: 60000 },
+//   { username: 'Fastcampus2', record: 60000 },
+//   { username: 'Fastcampus3', record: 18000 },
+//   { username: 'Fastcampus4', record: 20000 },
+//   { username: 'Fastcampus5', record: 21000 },
+//   { username: 'Fastcampus6', record: 23000 },
+//   { username: 'Fastcampus7', record: 25000 },
+//   { username: 'Hangyul', record: 29300 },
+//   { username: 'Fastcampus8', record: 60000 },
+//   { username: 'Fastcampus2', record: 60000 },
+//   { username: 'Fastcampus3', record: 18000 },
+//   { username: 'Fastcampus4', record: 20000 },
+//   { username: 'Fastcampus5', record: 21000 },
+//   { username: 'Fastcampus6', record: 23000 },
+//   { username: 'Fastcampus7', record: 25000 },
+//   { username: 'Hangyul', record: 29300 },
+//   { username: 'Fastcampus8', record: 60000 },
 //   { username: 'Fastcampus9', record: 129300 }
 // ];
 
-// // 실험용 localStorage 넣는 코드
+// 실험용 localStorage 넣는 코드
 // window.localStorage.setItem('records', JSON.stringify(fetchedData));
 // window.localStorage.setItem(
 //   'currentUser',
 //   JSON.stringify({ username: 'Chaeyoung', record: 1100 })
 // );
 
+const rankState = {
+  currentPage: getFromSessionStorage('currentPage', 1),
+  lastPageNum: 1
+};
 
 const renderRanks = () => {
-  const records = getFromLocalStorage('records');
+  const records = getFromLocalStorage('records', []);
 
   // 데이터가 없는 경우, No records yet 메시지 노출 및 result 가린 후 return
-  if (!records) {
+  if (!records.length) {
     document.querySelector('.ranks-table-head').textContent = 'No records yet';
     document.querySelector('.page-control').classList.add('hidden');
     return;
@@ -58,10 +95,20 @@ const renderRanks = () => {
     )
     .join('');
 
-  // 마지막 페이지넘버에 따라 ul 요소 동적 생성 및 추가
+  // currentPage 따라 처리한 ul 요소 동적 생성 및 추가
+  const indexOfFirst =
+    Math.floor((rankState.currentPage - 1) / LIMIT) * LIMIT + 1;
+  const indexOfLast =
+    indexOfFirst + LIMIT - 1 < rankState.lastPageNum
+      ? indexOfFirst + LIMIT - 1
+      : rankState.lastPageNum;
+
   document.querySelector('.page-nums').innerHTML = Array.from(
-    { length: rankState.lastPageNum },
-    (_, i) => `<li ${rankState.currentPage === i+1 ? 'class="current"':''}><a href="#">${i + 1}</a></li>`
+    { length: indexOfLast - indexOfFirst + 1 },
+    (_, i) =>
+      `<li ${
+        rankState.currentPage === indexOfFirst + i ? 'class="current"' : ''
+      }><a href="#">${indexOfFirst + i}</a></li>`
   ).join('');
 
   const currentUser = getFromLocalStorage('currentUser');
@@ -93,22 +140,7 @@ const renderRanks = () => {
       );
     });
   }
-
-//   // 5위 안에 안 드는 경우에는 내 기록을 순위판 최하단에 붙여주기
-//   const newListItem = document.createElement('li');
-//   newListItem.classList.add('added');
-//   newListItem.innerHTML = `<span>${currentUserRank}</span>
-//       <span>${currentUser.username}</span>
-//       <span>${formatRecordFromMs(currentUser.record)}</span>`;
-//   document.querySelector('.ranks-ol').appendChild(newListItem);
-//   document.querySelector('.result').classList.add('added');
-// 
-// };
-
-// const setState = (newStateKey, newStateValue) => {
-//   rankState[newStateKey] = newStateValue;
-//   renderRanks();
-// };
+};
 
 [...document.querySelectorAll('.prev-btn')].forEach($btn => {
   $btn.onclick = () => {
@@ -116,7 +148,7 @@ const renderRanks = () => {
     rankState.currentPage = $btn.classList.contains('to-first')
       ? 1
       : rankState.currentPage - 1;
-    setLocalStorage('currentPage', rankState.currentPage);
+    setSessionStorage('currentPage', rankState.currentPage);
     renderRanks();
   };
 });
@@ -127,7 +159,7 @@ const renderRanks = () => {
     rankState.currentPage = $btn.classList.contains('to-last')
       ? rankState.lastPageNum
       : rankState.currentPage + 1;
-    setLocalStorage('currentPage', rankState.currentPage);
+    setSessionStorage('currentPage', rankState.currentPage);
     renderRanks();
   };
 });
