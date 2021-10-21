@@ -1,10 +1,4 @@
 import { getFromLocalStorage, setLocalStorage } from './utils.js';
-// test용
-// setLocalStorage('records', fetchedData);
-
-// username 등록 (state에서 로컬 값 변경해줘야 함)
-// const setCurrentUser = userName =>
-//   localStorage.setItem('currentUser', userName);
 
 const validate = name => {
   const regexp = new RegExp(/^[ㄱ-ㅎ|가-힣|a-z|A-Z|]{1,15}$/);
@@ -21,11 +15,6 @@ $input.oninput = () => {
 };
 
 document.querySelector('.entry-form').onsubmit = e => {
-  // TODO:
-  // if(!(validate(username) && getFromLocalStorage('records', []).every(
-  //   record => record.username !== username
-  // )) return;
-
   e.preventDefault();
   const username = $input.value;
   const isValid = validate(username);
