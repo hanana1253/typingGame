@@ -1,28 +1,28 @@
 import { getFromLocalStorage, formatRecordFromMs } from './utils.js';
 
 // localStorage에서 가져온 데이터
-// const fetchedData = [
-//   { username: 'Bareum', record: 10 },
-//   { username: 'Chaeyoung', record: 110 },
-//   { username: 'Sohyeong', record: 1249 },
-//   { username: 'Fastcampus', record: 1500 },
-//   { username: 'Fastcampus2', record: 6000 },
-//   { username: 'Fastcampus3', record: 1800 },
-//   { username: 'Fastcampus4', record: 2000 },
-//   { username: 'Fastcampus5', record: 2100 },
-//   { username: 'Fastcampus6', record: 2300 },
-//   { username: 'Fastcampus7', record: 2500 },
-//   { username: 'Hangyul', record: 2930 },
-//   { username: 'Fastcampus8', record: 6000 },
-//   { username: 'Fastcampus9', record: 12930 }
-// ];
+const fetchedData = [
+  { username: 'Bareum', record: 100 },
+  { username: 'Chaeyoung', record: 1100 },
+  { username: 'Sohyeong', record: 12490 },
+  { username: 'Fastcampus', record: 15000 },
+  { username: 'Fastcampus2', record: 60000 },
+  { username: 'Fastcampus3', record: 18000 },
+  { username: 'Fastcampus4', record: 20000 },
+  { username: 'Fastcampus5', record: 21000 },
+  { username: 'Fastcampus6', record: 23000 },
+  { username: 'Fastcampus7', record: 25000 },
+  { username: 'Hangyul', record: 29300 },
+  { username: 'Fastcampus8', record: 60000 },
+  { username: 'Fastcampus9', record: 129300 }
+];
 
 // // 실험용 localStorage 넣는 코드
-// window.localStorage.setItem('records', JSON.stringify(fetchedData));
-// window.localStorage.setItem(
-//   'currentUser',
-//   JSON.stringify({ username: 'Chaeyoung', record: 6000 })
-// );
+window.localStorage.setItem('records', JSON.stringify(fetchedData));
+window.localStorage.setItem(
+  'currentUser',
+  JSON.stringify({ username: 'Chaeyoung', record: 1100 })
+);
 
 const renderRanks = () => {
   const fetchedData = getFromLocalStorage('records');

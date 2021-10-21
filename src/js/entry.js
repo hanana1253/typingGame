@@ -1,10 +1,10 @@
-import { getFromLocalStorage } from './utils.js';
+import { getFromLocalStorage, setLocalStorage } from './utils.js';
 // test용
 // setLocalStorage('records', fetchedData);
 
 // username 등록 (state에서 로컬 값 변경해줘야 함)
-const setCurrentUser = userName =>
-  localStorage.setItem('currentUser', userName);
+// const setCurrentUser = userName =>
+//   localStorage.setItem('currentUser', userName);
 
 const isValidRegexp = name => {
   const regexp = new RegExp(/^[ㄱ-ㅎ|가-힣|a-z|A-Z|]{4,25}$/);
@@ -12,12 +12,13 @@ const isValidRegexp = name => {
 };
 
 // EVENTS ====================================================================
+const $input = document.getElementById('userName');
 
-document.getElementById('userName').oninput = e => {
-  const inputName = e.target.value;
+$input.oninput = () => {
+  const inputName = $input.value;
 
   const isNameExist =
-    getFromLocalStorage('records').findIndex(
+    getFromLocalStorage('records', []).findIndex(
       record => record.username === inputName
     ) >= 0;
 
@@ -34,6 +35,8 @@ document.getElementById('userName').oninput = e => {
     .classList.toggle('disabled', isNameExist || !isValidRegexp(inputName));
 };
 
-document.querySelector('.entry-form').onsubmit = () => {
-  setCurrentUser(document.querySelector('.entry-form #userName'));
+document.querySelector('.entry-form').onsubmit = e => {
+  e.preventDefault();
+  setLocalStorage('currentUser', { username: $input.value });
+  window.location.assign('src/game.html');
 };
