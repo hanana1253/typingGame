@@ -73,20 +73,20 @@
 
     li {
       margin: 0 2vw;
-      transition: transform ease-in 200ms;
-      &:hover {
-        transform: scale(1.5);
-      }
-    }
-    .current {
-      color: $red;
-    }
-  }
 
-  > button {
+      &.current {
+        color: $red;
+      }
+
+    }
+
+  }
+  
+   button {
     background-color: transparent;
     border-style: none;
     transition: transform ease-in 200ms;
+    
     &:hover {
       transform: scale(1.5);
     }
