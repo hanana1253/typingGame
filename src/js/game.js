@@ -95,11 +95,12 @@ const finish = () => {
   const updatedRecords = [newRecord, ...records].sort(
     (user1, user2) => +user1.record - +user2.record
   );
-  const isBestRecord = records[0].username === username;
+  const isBestRecord = records[0]?.username === username;
 
   setState({ ...state, isBestRecord, isFinished: true });
   setLocalStorage(STORAGE_KEY.RECORDS, updatedRecords);
   setLocalStorage(STORAGE_KEY.CURRENT_USER, newRecord);
+  document.querySelector('.ranking').focus();
 };
 
 const correct = () => {
@@ -121,7 +122,7 @@ const wrong = () => setState({ ...state, isWrong: true });
 window.addEventListener('DOMContentLoaded', startCountDown);
 
 $input.onkeyup = e => {
-  if (e.key !== 'Enter') return;
+  if (e.key !== 'Enter' || $word.textContent === '') return;
 
   $input.value === $word.textContent ? correct() : wrong();
 };
