@@ -109,7 +109,6 @@ const renderRanks = () => {
 });
 
 document.querySelector('.page-nums').onclick = e => {
-  if(!e.target.matches('.page-nums a')) return;
   e.preventDefault();
   rankState.currentPage = +e.target.textContent;
   setSessionStorage('currentPage', rankState.currentPage);
