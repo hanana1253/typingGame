@@ -1,11 +1,12 @@
-import { PAGE_VIEW_LIMIT } from './constant.js';
 import { STORAGE_KEY, getFromLocalStorage } from './storage.js';
 import formatRecordFromMs from './utils.js';
 
+const PAGE_VIEW_LIMIT = 5;
+
 const currentUser = getFromLocalStorage(STORAGE_KEY.CURRENT_USER, '');
 const records = getFromLocalStorage(STORAGE_KEY.RECORDS, []);
-const lastPageNum = Math.ceil(records.length / PAGE_VIEW_LIMIT);
 
+const lastPageNum = Math.ceil(records.length / PAGE_VIEW_LIMIT);
 let currentPage = 1;
 
 const render = (() => {
