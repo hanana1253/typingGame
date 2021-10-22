@@ -95,7 +95,7 @@ const finish = () => {
   const updatedRecords = [newRecord, ...records].sort(
     (user1, user2) => +user1.record - +user2.record
   );
-  const isBestRecord = records[0]?.username === username;
+  const isBestRecord = updatedRecords[0].username === username;
 
   setState({ ...state, isBestRecord, isFinished: true });
   setLocalStorage(STORAGE_KEY.RECORDS, updatedRecords);
