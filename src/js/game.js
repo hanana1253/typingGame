@@ -90,16 +90,16 @@ const finish = () => {
   const { username } = getFromLocalStorage(STORAGE_KEY.CURRENT_USER, {
     username: 'Anonymous'
   });
-  const currentUser = { username, record: elapsedTime };
-  const localRecords = getFromLocalStorage(STORAGE_KEY.RECORDS, []);
-  const records = [currentUser, ...localRecords].sort(
-    (record1, record2) => +record1.elapsedTime - +record2.elapsedTime
+  const newRecord = { username, record: elapsedTime };
+  const records = getFromLocalStorage(STORAGE_KEY.RECORDS, []);
+  const updatedRecords = [newRecord, ...records].sort(
+    (user1, user2) => +user1.record - +user2.record
   );
   const isBestRecord = records[0].username === username;
 
   setState({ ...state, isBestRecord, isFinished: true });
-  setLocalStorage(STORAGE_KEY.RECORDS, records);
-  setLocalStorage(STORAGE_KEY.CURRENT_USER, currentUser);
+  setLocalStorage(STORAGE_KEY.RECORDS, updatedRecords);
+  setLocalStorage(STORAGE_KEY.CURRENT_USER, newRecord);
 };
 
 const correct = () => {
@@ -127,5 +127,5 @@ $input.onkeyup = e => {
 };
 
 $input.oninput = () => {
-  new Audio('audios/keyboard.wav').play();
+  new Audio('src/audios/keyboard.wav').play();
 };
