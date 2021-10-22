@@ -52,3 +52,7 @@ document.querySelector('.entry-form').onsubmit = e => {
 $start.onclick = () => {
   setLocalStorage(STORAGE_KEY.CURRENT_USER, { username: $input.value });
 };
+
+window.addEventListener('DOMContentLoaded', () => {
+  setLocalStorage(STORAGE_KEY.CURRENT_USER, null);
+});
