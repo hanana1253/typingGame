@@ -1,10 +1,11 @@
 import {
+  STORAGE_KEY,
   getFromLocalStorage,
-  setLocalStorage,
-  formatRecordFromMs
-} from './utils.js';
+  setLocalStorage
+} from './storage.js';
 
-import { LS_KEY, INITIAL_COUNTDOWN } from './constant.js';
+import formatRecordFromMs from './utils.js';
+import { INITIAL_COUNTDOWN } from './constant.js';
 import word from './word.js';
 
 let timerId = null;
@@ -12,10 +13,10 @@ let elapsedTime = 0;
 
 let state = {
   currentWord: word.getWord,
-  restCount: 3,
+  leftWordsCount: 3,
   isWrong: false,
   isFinished: false,
-  isBest: false
+  isBestRecord: false
 };
 
 const $word = document.querySelector('.word');
@@ -30,7 +31,7 @@ const $popupRecord = document.querySelector('.popup-record');
 
 const render = () => {
   $word.textContent = state.currentWord;
-  $left.textContent = state.restCount;
+  $left.textContent = state.leftWordsCount;
   $input.classList.toggle('error', state.isWrong);
   $error.style.display = state.isWrong ? 'block' : 'none';
   $time.textContent = formatRecordFromMs(elapsedTime);
@@ -38,10 +39,12 @@ const render = () => {
   if (!state.isFinished) return;
 
   $popupWrap.style.display = 'block';
-  $popupWrap.classList.toggle('best-record', state.isBest);
-  $popupTitle.textContent = state.isBest ? 'Congraturations!!' : 'Good Job!!';
+  $popupWrap.classList.toggle('best-record', state.isBestRecord);
+  $popupTitle.textContent = state.isBestRecord
+    ? 'Congraturations!!'
+    : 'Good Job!!';
   $popupRecord.textContent =
-    (state.isBest ? 'The highest record : ' : 'record : ') +
+    (state.isBestRecord ? 'The highest record : ' : 'record : ') +
     formatRecordFromMs(elapsedTime);
 };
 
@@ -50,63 +53,63 @@ const setState = newState => {
   render();
 };
 
-const timeHandler = () => {
+const measureTime = () => {
   timerId = setInterval(() => {
     elapsedTime += 10;
     $time.textContent = formatRecordFromMs(elapsedTime);
   }, 10);
 };
 
+const startCountDown = () => {
+  let countDown = INITIAL_COUNTDOWN;
+  document.querySelector('.count').textContent = 'READY';
+  timerId = setInterval(() => {
+    document.querySelector('.count').textContent = countDown--;
+  }, 1000);
+
+  setTimeout(() => {
+    clearInterval(timerId);
+    document.querySelector('.count-down').style.display = 'none';
+    render();
+    measureTime();
+  }, (INITIAL_COUNTDOWN + 1) * 1000);
+};
+
 const finish = () => {
   clearInterval(timerId);
-  const currentUser = {
-    username: getFromLocalStorage(LS_KEY.CURRENT_USER, {
-      username: 'Anonymous'
-    }).username,
-    record: elapsedTime
-  };
-  const localRecords = getFromLocalStorage(LS_KEY.RECORDS, []);
+
+  const { username } = getFromLocalStorage(STORAGE_KEY.CURRENT_USER, {
+    username: 'Anonymous'
+  });
+  const currentUser = { username, record: elapsedTime };
+  const localRecords = getFromLocalStorage(STORAGE_KEY.RECORDS, []);
   const records = [currentUser, ...localRecords].sort(
     (record1, record2) => +record1.elapsedTime - +record2.elapsedTime
   );
-  const isBest = records[0].username === currentUser.username;
+  const isBestRecord = records[0].username === username;
 
-  setState({ ...state, isBest, isFinished: true });
-  setLocalStorage(LS_KEY.RECORDS, records);
-  setLocalStorage(LS_KEY.CURRENT_USER, currentUser);
+  setState({ ...state, isBestRecord, isFinished: true });
+  setLocalStorage(STORAGE_KEY.RECORDS, records);
+  setLocalStorage(STORAGE_KEY.CURRENT_USER, currentUser);
 };
 
 const correct = () => {
   setState({
     ...state,
     currentWord: word.getWord,
-    restCount: state.restCount - 1,
+    leftWordsCount: state.leftWordsCount - 1,
     isWrong: false
   });
+
   $input.value = '';
 
-  if (state.restCount === 0) {
+  if (state.leftWordsCount === 0) {
     finish();
   }
 };
 const wrong = () => setState({ ...state, isWrong: true });
 
-window.addEventListener('DOMContentLoaded', () => {
-  let countDownTimer = null;
-  let countDown = INITIAL_COUNTDOWN;
-
-  document.querySelector('.count').textContent = 'READY';
-  countDownTimer = setInterval(() => {
-    document.querySelector('.count').textContent = countDown--;
-  }, 1000);
-
-  setTimeout(() => {
-    clearInterval(countDownTimer);
-    document.querySelector('.count-down').style.display = 'none';
-    render();
-    timeHandler();
-  }, (INITIAL_COUNTDOWN + 1) * 1000);
-});
+window.addEventListener('DOMContentLoaded', startCountDown);
 
 $input.onkeyup = e => {
   if (e.key !== 'Enter') return;

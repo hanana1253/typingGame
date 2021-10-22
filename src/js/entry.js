@@ -1,5 +1,9 @@
-import { getFromLocalStorage, setLocalStorage } from './utils.js';
-import { ERROR_MSG, LS_KEY, REG_EXP } from './constant.js';
+import {
+  STORAGE_KEY,
+  getFromLocalStorage,
+  setLocalStorage
+} from './storage.js';
+import { ERROR_MSG, REG_EXP } from './constant.js';
 
 const $input = document.getElementById('userName');
 const $start = document.querySelector('.start');
@@ -16,7 +20,7 @@ document.querySelector('.entry-form').onsubmit = e => {
 
   const username = $input.value;
   const isValid = validate(username);
-  const isUnique = getFromLocalStorage(LS_KEY.RECORDS, []).every(
+  const isUnique = getFromLocalStorage(STORAGE_KEY.RECORDS, []).every(
     record => record.username !== username
   );
 
@@ -39,5 +43,5 @@ document.querySelector('.entry-form').onsubmit = e => {
 };
 
 $start.onclick = () => {
-  setLocalStorage(LS_KEY.CURRENT_USER, { username: $input.value });
+  setLocalStorage(STORAGE_KEY.CURRENT_USER, { username: $input.value });
 };
