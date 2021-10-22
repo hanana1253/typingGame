@@ -4,6 +4,7 @@ import { getFromLocalStorage, formatRecordFromMs } from './utils.js';
 const currentUser = getFromLocalStorage('currentUser', '');
 const records = getFromLocalStorage('records', []);
 const lastPageNum = Math.ceil(records.length / PAGE_VIEW_LIMIT);
+
 const state = {
   currentPage: 1
 };
