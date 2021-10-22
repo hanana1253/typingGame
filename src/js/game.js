@@ -66,15 +66,18 @@ const startCountDown = (() => {
   let countDownTimer = null;
   let countDown = INITIAL_COUNTDOWN;
 
+  const $count = document.querySelector('.count');
+  const $countDown = document.querySelecotr('.count-down');
+
   return () => {
-    document.querySelector('.count').textContent = 'READY';
+    $count.textContent = 'READY';
     countDownTimer = setInterval(() => {
-      document.querySelector('.count').textContent = countDown--;
+      $count.textContent = countDown--;
     }, 1000);
 
     setTimeout(() => {
       clearInterval(countDownTimer);
-      document.querySelector('.count-down').style.display = 'none';
+      $countDown.style.display = 'none';
       render();
       measureTime();
     }, (INITIAL_COUNTDOWN + 1) * 1000);
