@@ -127,5 +127,5 @@ $input.onkeyup = e => {
 };
 
 $input.oninput = () => {
-  new Audio('audios/keyboard.wav').play();
+  new Audio('src/audios/keyboard.wav').play();
 };
