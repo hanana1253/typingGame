@@ -1,8 +1,9 @@
 import { PAGE_VIEW_LIMIT } from './constant.js';
-import { getFromLocalStorage, formatRecordFromMs } from './utils.js';
+import { STORAGE_KEY, getFromLocalStorage } from './storage.js';
+import formatRecordFromMs from './utils.js';
 
-const currentUser = getFromLocalStorage('currentUser', '');
-const records = getFromLocalStorage('records', []);
+const currentUser = getFromLocalStorage(STORAGE_KEY.CURRENT_USER, '');
+const records = getFromLocalStorage(STORAGE_KEY.RECORDS, []);
 const lastPageNum = Math.ceil(records.length / PAGE_VIEW_LIMIT);
 
 const state = {
