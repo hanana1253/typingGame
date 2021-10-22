@@ -15,6 +15,7 @@ const render = (() => {
   const $pageControl = document.querySelector('.page-control');
   const $pageNums = document.querySelector('.page-nums');
   const $result = document.querySelector('.result');
+
   return () => {
     if (records.length === 0) {
       $ranksTable.classList.add('hidden');
@@ -61,7 +62,10 @@ const render = (() => {
       ).join('');
     })();
 
-    if (!currentUser) return;
+    if (!currentUser) {
+      $result.classList.add('hidden');
+      return;
+    };
 
     const currentUserRank =
       records.findIndex(({ username }) => username === currentUser.username) +
@@ -80,8 +84,7 @@ document.querySelector('.page-control').onclick = e => {
     !e.target.matches('.page-control button') ||
     (e.target.matches('.prev-btn') && currentPage === 1) ||
     (e.target.matches('.next-btn') && currentPage === lastPageNum)
-  )
-    return;
+  ) return;
 
   currentPage = (() => {
     if (e.target.matches('.prev-btn')) {
