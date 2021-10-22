@@ -30,7 +30,7 @@ document.querySelector('.entry-form').onsubmit = e => {
       : ERROR_MSG.INVALID
     : ERROR_MSG.NOT_UNIQUE;
 
-  document.querySelector('.title').textContent = isValid
+  document.querySelector('.title').textContent = isUnique && isValid
     ? `Welcome, ${$input.value}`
     : 'Typing game';
 
