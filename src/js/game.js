@@ -3,10 +3,10 @@ import {
   getFromLocalStorage,
   setLocalStorage
 } from './storage.js';
-
 import formatRecordFromMs from './utils.js';
-import { INITIAL_COUNTDOWN } from './constant.js';
 import word from './word.js';
+
+const INITIAL_COUNTDOWN = 3;
 
 let timerId = null;
 let elapsedTime = 0;
@@ -67,7 +67,7 @@ const startCountDown = (() => {
   let countDown = INITIAL_COUNTDOWN;
 
   const $count = document.querySelector('.count');
-  const $countDown = document.querySelecotr('.count-down');
+  const $countDown = document.querySelector('.count-down');
 
   return () => {
     $count.textContent = 'READY';

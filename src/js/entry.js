@@ -3,7 +3,15 @@ import {
   getFromLocalStorage,
   setLocalStorage
 } from './storage.js';
-import { ERROR_MSG, REG_EXP } from './constant.js';
+
+const ERROR_MSG = {
+  INVALID: 'Use only 4-12 alphabet letters',
+  NOT_UNIQUE: 'Username already exist'
+};
+
+const REG_EXP = {
+  USERNAME: /^[a-z|A-Z|]{4,12}$/
+};
 
 const $input = document.getElementById('userName');
 const $start = document.querySelector('.start');
