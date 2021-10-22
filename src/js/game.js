@@ -22,31 +22,33 @@ let state = {
 const $word = document.querySelector('.word');
 const $time = document.querySelector('.time');
 const $input = document.querySelector('.game > input');
-const $error = document.querySelector('.error');
-const $left = document.querySelector('.left');
 
-const $popupWrap = document.querySelector('.popup-wrap');
-const $popupTitle = document.querySelector('.popup-title');
-const $popupRecord = document.querySelector('.popup-record');
+const render = (() => {
+  const $error = document.querySelector('.error');
+  const $left = document.querySelector('.left');
+  const $popupWrap = document.querySelector('.popup-wrap');
+  const $popupTitle = document.querySelector('.popup-title');
+  const $popupRecord = document.querySelector('.popup-record');
 
-const render = () => {
-  $word.textContent = state.currentWord;
-  $left.textContent = state.leftWordsCount;
-  $input.classList.toggle('error', state.isWrong);
-  $error.style.display = state.isWrong ? 'block' : 'none';
-  $time.textContent = formatRecordFromMs(elapsedTime);
+  return () => {
+    $word.textContent = state.currentWord;
+    $left.textContent = state.leftWordsCount;
+    $input.classList.toggle('error', state.isWrong);
+    $error.style.display = state.isWrong ? 'block' : 'none';
+    $time.textContent = formatRecordFromMs(elapsedTime);
 
-  if (!state.isFinished) return;
+    if (!state.isFinished) return;
 
-  $popupWrap.style.display = 'block';
-  $popupWrap.classList.toggle('best-record', state.isBestRecord);
-  $popupTitle.textContent = state.isBestRecord
-    ? 'Congraturations!!'
-    : 'Good Job!!';
-  $popupRecord.textContent =
-    (state.isBestRecord ? 'The highest record : ' : 'record : ') +
-    formatRecordFromMs(elapsedTime);
-};
+    $popupWrap.style.display = 'block';
+    $popupWrap.classList.toggle('best-record', state.isBestRecord);
+    $popupTitle.textContent = state.isBestRecord
+      ? 'Congraturations!!'
+      : 'Good Job!!';
+    $popupRecord.textContent =
+      (state.isBestRecord ? 'The highest record : ' : 'record : ') +
+      formatRecordFromMs(elapsedTime);
+  };
+})();
 
 const setState = newState => {
   state = newState;
@@ -60,20 +62,24 @@ const measureTime = () => {
   }, 10);
 };
 
-const startCountDown = () => {
+const startCountDown = (() => {
+  let countDownTimer = null;
   let countDown = INITIAL_COUNTDOWN;
-  document.querySelector('.count').textContent = 'READY';
-  timerId = setInterval(() => {
-    document.querySelector('.count').textContent = countDown--;
-  }, 1000);
 
-  setTimeout(() => {
-    clearInterval(timerId);
-    document.querySelector('.count-down').style.display = 'none';
-    render();
-    measureTime();
-  }, (INITIAL_COUNTDOWN + 1) * 1000);
-};
+  return () => {
+    document.querySelector('.count').textContent = 'READY';
+    countDownTimer = setInterval(() => {
+      document.querySelector('.count').textContent = countDown--;
+    }, 1000);
+
+    setTimeout(() => {
+      clearInterval(countDownTimer);
+      document.querySelector('.count-down').style.display = 'none';
+      render();
+      measureTime();
+    }, (INITIAL_COUNTDOWN + 1) * 1000);
+  };
+})();
 
 const finish = () => {
   clearInterval(timerId);
