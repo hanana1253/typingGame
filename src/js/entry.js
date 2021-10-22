@@ -38,9 +38,8 @@ document.querySelector('.entry-form').onsubmit = e => {
       : ERROR_MSG.INVALID
     : ERROR_MSG.NOT_UNIQUE;
 
-  document.querySelector('.title').textContent = isUnique && isValid
-    ? `Welcome, ${$input.value}`
-    : 'Typing game';
+  document.querySelector('.title').textContent =
+    isUnique && isValid ? `Welcome, ${$input.value}` : 'Typing game';
 
   $start.classList.toggle('disabled', !(isUnique && isValid));
 
@@ -53,3 +52,7 @@ document.querySelector('.entry-form').onsubmit = e => {
 $start.onclick = () => {
   setLocalStorage(STORAGE_KEY.CURRENT_USER, { username: $input.value });
 };
+
+window.addEventListener('DOMContentLoaded', () => {
+  setLocalStorage(STORAGE_KEY.CURRENT_USER, null);
+});

@@ -80,7 +80,8 @@ document.querySelector('.page-control').onclick = e => {
     !e.target.matches('.page-control button') ||
     (e.target.matches('.prev-btn') && currentPage === 1) ||
     (e.target.matches('.next-btn') && currentPage === lastPageNum)
-  ) return;
+  )
+    return;
 
   currentPage = (() => {
     if (e.target.matches('.prev-btn')) {
