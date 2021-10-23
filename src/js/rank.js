@@ -1,4 +1,7 @@
-import { STORAGE_KEY, getFromLocalStorage } from './storage.js';
+import {
+  STORAGE_KEY,
+  getFromLocalStorage,
+} from './storage.js';
 import formatRecordFromMs from './utils.js';
 
 const PAGE_VIEW_LIMIT = 5;
@@ -62,10 +65,10 @@ const render = (() => {
       ).join('');
     })();
 
-    if (!currentUser || currentUser.username === "Anonymous") {
+    if (!currentUser || currentUser.username === 'Anonymous') {
       $result.classList.add('hidden');
       return;
-    };
+    }
 
     const currentUserRank =
       records.findIndex(({ username }) => username === currentUser.username) +
@@ -84,7 +87,8 @@ document.querySelector('.page-control').onclick = e => {
     !e.target.matches('.page-control button') ||
     (e.target.matches('.prev-btn') && currentPage === 1) ||
     (e.target.matches('.next-btn') && currentPage === lastPageNum)
-  ) return;
+  )
+    return;
 
   currentPage = (() => {
     if (e.target.matches('.prev-btn')) {
@@ -103,6 +107,4 @@ document.querySelector('.page-control').onclick = e => {
 };
 
 document.addEventListener('DOMContentLoaded', render);
-document.addEventListener('beforeunload', e => {
-  e.preventDefault();
-})
+
