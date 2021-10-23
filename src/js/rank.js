@@ -62,7 +62,7 @@ const render = (() => {
       ).join('');
     })();
 
-    if (!currentUser) {
+    if (!currentUser || currentUser.username === "Anonymous") {
       $result.classList.add('hidden');
       return;
     };
@@ -103,3 +103,6 @@ document.querySelector('.page-control').onclick = e => {
 };
 
 document.addEventListener('DOMContentLoaded', render);
+document.addEventListener('beforeunload', e => {
+  e.preventDefault();
+})
