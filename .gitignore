@@ -120,3 +120,5 @@ dist
 # scss
 src/css/
 src/css/*.map
+
+.DS_Store
