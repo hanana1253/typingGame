@@ -54,5 +54,6 @@ $start.onclick = () => {
 };
 
 window.addEventListener('DOMContentLoaded', () => {
-  setLocalStorage(STORAGE_KEY.CURRENT_USER, null);
+  $input.focus();
+  setLocalStorage(STORAGE_KEY.CURRENT_USER, {username: 'Anonymous'});
 });
