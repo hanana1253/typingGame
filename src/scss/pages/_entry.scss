@@ -76,11 +76,7 @@
     transition: all 0.3s;
   }
 
-  .button:hover {
-    opacity: 0.7;
-  }
-
-  .button.start {
+  .button.start, .button:hover, .button:focus {
     background-color: rgba($themeB6, 0.6);
     color: $white;
   }

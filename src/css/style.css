@@ -312,10 +312,7 @@ textarea {
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
   transition: all 0.3s;
 }
-.entry-container .button:hover {
-  opacity: 0.7;
-}
-.entry-container .button.start {
+.entry-container .button.start, .entry-container .button:hover, .entry-container .button:focus {
   background-color: rgba(117, 82, 72, 0.6);
   color: #fff;
 }
@@ -370,7 +367,6 @@ textarea {
   border: solid 1px transparent;
 }
 .game-container .game input:focus {
-  outline: none;
   border: solid 1px #101010;
 }
 .game-container .game input.error:focus {
@@ -443,9 +439,13 @@ textarea {
   width: 40%;
   font-size: 1.5rem;
   color: #fa812f;
-  background: #fdd475;
+  background-color: #fdd475;
   border-radius: 5px;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.7);
+}
+.popup-wrap .button-group .button:hover, .popup-wrap .button-group .button:focus {
+  background-color: #fa812f;
+  color: #fdd475;
 }
 
 @keyframes slide {

@@ -44,7 +44,6 @@
       text-align: center;
       border: solid 1px transparent;
       &:focus {
-        outline: none;
         border: solid 1px $black;
       }
       &.error:focus {
