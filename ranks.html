@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rank Board</title>
+    <link rel="stylesheet" href="./src/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="ranks-container">
+      <h1 class="ranks-heading">Ranks</h1>
+      <table class="ranks-table">
+        <thead>
+          <tr class="ranks-table-head">
+            <th scope="col">Rank</th>
+            <th scope="col">Username</th>
+            <th scope="col">Record</th>
+          </tr>
+        </thead>
+        <tbody class="ranks-table-body"></tbody>
+      </table>
+      <div class="page-control">
+        <button class="prev-btn to-first fas fa-angle-double-left">
+          <span class="a11y-hidden">처음 페이지</span>
+        </button>
+        <button class="prev-btn fas fa-angle-left">
+          <span class="a11y-hidden">이전 페이지</span>
+        </button>
+        <ul class="page-nums"></ul>
+        <button class="next-btn fas fa-angle-right">
+          <span class="a11y-hidden">다음 페이지</span>
+        </button>
+        <button class="next-btn to-last fas fa-angle-double-right">
+          <span class="a11y-hidden">마지막 페이지</span>
+        </button>
+      </div>
+      <div class="result">
+      </div>
+      <a class="return" href="./index.html">Back</a>
+    </div>
+    <script src="./src/js/rank.js" type="module"></script>
+  </body>
+</html>

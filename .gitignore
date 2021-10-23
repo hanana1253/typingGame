@@ -116,3 +116,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.
+
+# scss
+src/css/
+src/css/*.map
+
+.DS_Store

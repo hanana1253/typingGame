@@ -1,0 +1,121 @@
+@use '../base/' as *;
+
+@keyframes slide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.ranks-heading {
+  margin: 2vh 10vw;
+  min-width: 500px;
+  height: 20vh;
+  line-height: 1.5;
+  background-color: $playful2;
+  text-align: center;
+  color: $black;
+  font-size: 5rem;
+  border-radius: 5px;
+}
+
+.ranks-table {
+  width: 80vw;
+  min-width: 500px;
+  margin: 0 10vw;
+  padding: 5vh 3vw;
+  background-color: $peach1;
+  border-radius: 5px;
+  font-size: 1.5rem;
+
+  &-head {
+    background-color: $peach3;
+    color: $white;
+    text-transform: uppercase;
+  }
+
+  & tr {
+    margin: 1.5vh 1vw;
+    height: 5vh;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+
+    &.my-record {
+      background-color: rgba(247, 235, 135, 0.8);
+      color: $themeA5;
+      @include slidingEffect();
+    }
+
+    th,
+    td {
+      width: 20vw;
+      min-width: 30px;
+      line-height: 1.5;
+      text-align: center;
+    }
+  }
+}
+.page-control {
+  margin: 0 10vw;
+  padding: 2vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  background-color: $themeB1;
+
+  .page-nums {
+    display: flex;
+
+    li {
+      margin: 0 2vw;
+
+      &.current {
+        color: $red;
+      }
+    }
+  }
+
+  button {
+    background-color: transparent;
+    transition: transform ease-in 200ms;
+
+    &:hover {
+      transform: scale(1.5);
+    }
+  }
+}
+
+.result {
+  margin: 2vh 10vw;
+  padding: 1vh;
+  min-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $playful3;
+  font-size: 1.2rem;
+  p {
+    margin: 1vh;
+  }
+}
+
+.return {
+  margin: 2vh auto;
+  padding: 1.5vh 3vw;
+  width: 40vw;
+  display: block;
+  border-radius: 15px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
+  background-color: $peach1;
+  text-align: center;
+  font-size: 1.5rem;
+
+  &:hover {
+    background-color: $peach3;
+    color: $white;
+  }
+}

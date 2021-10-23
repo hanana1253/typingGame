@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Typing game</title>
+    <link rel="stylesheet" href="./src/css/style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main class="entry-container">
+      <h1 class="title">Typing game</h1>
+      <div class="form-container">
+        <form class="entry-form">
+          <fieldset>
+            <legend class="a11y-hidden">Typing game form</legend>
+            <div class="input-container user-name">
+              <label for="userName" class="a11y-hidden">User name</label>
+              <input
+                type="text"
+                id="userName"
+                class="form-input"
+                name="username"
+                placeholder="Please enter your name"
+              />
+              <div class="error"></div>
+              <button class="validate">
+                <i class="bx bx-check"></i>
+              </button>
+            </div>
+          </fieldset>
+        </form>
+        <a href="./game.html" class="button start disabled" tabindex="-1"
+          >START</a
+        >
+        <a href="./ranks.html" class="button rank">RANKS</a>
+      </div>
+    </main>
+    <script type="module" src="./src/js/entry.js"></script>
+  </body>
+</html>

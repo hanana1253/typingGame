@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+      integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./src/css/style.css" />
+    <title>Typing Game</title>
+  </head>
+  <body>
+    <main class="game-container">
+      <div class="game">
+        <h1 class="title">Typing Game</h1>
+        <small>Type the following:</small>
+
+        <p class="word"></p>
+
+        <label for="text" class="a11y-hidden">Type word</label>
+        <input
+          type="text"
+          id="text"
+          autocomplete="off"
+          placeholder="Type the word here..."
+          autofocus
+        />
+        <div class="error">That's wrong. Please type it again.</div>
+
+        <p class="time-container">Time: <span class="time">00:00:00</span></p>
+
+        <p class="left-container">Left words: <span class="left">0</span></p>
+        <audio src="./src/audios/keyboard.wav"></audio>
+      </div>
+    </main>
+    <div class="count-down">
+      <div class="count"></div>
+    </div>
+    <div class="popup-wrap">
+      <div class="popup">
+        <h2 class="popup-title"></h2>
+        <p class="popup-record"></p>
+        <div class="button-group">
+          <a href="./ranks.html" class="button ranking">Ranking</a>
+          <a href="./index.html" class="button main-page">Main Page</a>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./src/js/game.js"></script>
+  </body>
+</html>

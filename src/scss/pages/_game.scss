@@ -1,0 +1,74 @@
+@use '../base/' as *;
+
+.game-container {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $peach2;
+  position: relative;
+
+  .game {
+    width: 80vw;
+    padding: 1vw;
+    display: flex;
+    flex-direction: column;
+    background-color: $peach1;
+    text-align: center;
+    border-radius: 4px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+    color: $white;
+
+    .title {
+      margin: 1vw;
+      padding: 1vw;
+      line-height: 1;
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 4px;
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    .word {
+      margin: 5vh;
+      font-size: 5rem;
+      color: $black;
+    }
+
+    input {
+      margin: 4vw;
+      padding: 3vh 3vw;
+      border-radius: 4px;
+      font-size: 2rem;
+      text-align: center;
+      border: solid 1px transparent;
+      &:focus {
+        border: solid 1px $black;
+      }
+      &.error:focus {
+        border: solid 1px $red;
+      }
+    }
+
+    div.error {
+      color: $red;
+      font-size: 1.5rem;
+      margin-top: -1.5rem;
+    }
+
+    .time-container,
+    .left-container {
+      position: absolute;
+      top: 5vh;
+      font-size: 2rem;
+      color: $black;
+    }
+    .time-container {
+      left: 5vw;
+    }
+    .left-container {
+      right: 5vw;
+    }
+  }
+}
