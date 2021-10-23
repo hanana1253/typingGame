@@ -34,8 +34,9 @@ body *::after {
 
 // 본문 기본 폰트, 글자 크기, 굵기, 배경 색상 지정 --------------------------------------------- /
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gluten:wght@300&display=swap');
 body {
-  font-family: 'Noto Sans KR', 'Roboto', sans-serif;
+  font-family: 'Gluten', 'Noto Sans KR', 'Roboto', sans-serif;
   font-size: inherit;
   position: relative;
 }
@@ -105,6 +106,8 @@ input,
 button,
 textarea {
   appearance: none;
+  border-style: none;
+  font-family: inherit;
 }
 
 // 숨김 컨텐츠 처리 ------------------------------------------------------------- /
@@ -116,4 +119,8 @@ textarea {
   width: 1px;
   height: 1px;
   margin: -1px;
+}
+
+.hidden {
+  display: none !important;
 }
